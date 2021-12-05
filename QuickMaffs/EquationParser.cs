@@ -167,7 +167,7 @@ namespace QuickMaffs
 
                     if (parenthesisNestIndex > 0)
                     {
-                        if (nestedEquation.Length == 0 && equation[i] == '(')
+                        if (i == 0 && equation[i] == '(')
                             continue;
 
                         nestedEquation += equation[i];
