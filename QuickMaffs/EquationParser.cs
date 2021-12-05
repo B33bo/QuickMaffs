@@ -82,7 +82,7 @@ namespace QuickMaffs
                         equation_StrBuilder[0] = 'm';
                     else
                     {
-                        if (Operator.TryParse(Equation[i].ToString(), out _))
+                        if (Operator.TryParse(Equation[i-1].ToString(), out _))
                             equation_StrBuilder[i] = 'm';
                     }
                 }
@@ -201,15 +201,7 @@ namespace QuickMaffs
 
                 //There is a digit before the bracket.
 
-                string number = "";
-                for (int j = i - 1; j > 0; j--)
-                {
-                    if (digits.Contains(equation[j]))
-                        number = number.Insert(0, equation[j].ToString());
-                }
-
-                equation = equation.Insert(i, $"{number}*");
-                i -= number.Length + 2;
+                equation = equation.Insert(i, $"*");
             }
 
             return equation;

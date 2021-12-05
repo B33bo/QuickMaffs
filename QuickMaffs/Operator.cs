@@ -11,7 +11,7 @@ namespace QuickMaffs
 {
     public class Operator
     {
-        public const int maxPemdasOrder = 3;
+        public const int maxPemdasOrder = 4;
 
         public static Operator Invalid { get; } = new Operator(0, (a, b) => Complex.NaN, 0, "");
 
