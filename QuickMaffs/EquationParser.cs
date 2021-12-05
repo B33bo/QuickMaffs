@@ -46,6 +46,8 @@ namespace QuickMaffs
 
             else if (operations == 1)
             {
+                if (equation[0] == '-')
+                    return Solve("m" + equation[1..]);
                 return SolveOneOperationEquation(equation);
             }
 
@@ -63,7 +65,7 @@ namespace QuickMaffs
 
                     string insideEquation = GetNearestNumbers(equation, j);
                     equation = equation.Replace(insideEquation, Solve(insideEquation).ToMathematicalString());
-                    j = -1;
+                    //j = -1;
                 }
             }
 
@@ -197,7 +199,10 @@ namespace QuickMaffs
                 if (equation[i] != '(')
                     continue;
                 if (!digits.Contains(equation[i - 1]))
-                    continue;
+                {
+                    if (equation[i - 1] != ')')
+                        continue;
+                }
 
                 //There is a digit before the bracket.
 
