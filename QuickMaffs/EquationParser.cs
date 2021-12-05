@@ -10,7 +10,6 @@ namespace QuickMaffs
 {
     public static class EquationParser
     {
-        public static Random rnd = new();
         public static Dictionary<string, Complex> variables = new()
         {
             { "i", Complex.ImaginaryOne },
@@ -33,9 +32,10 @@ namespace QuickMaffs
             //Look for parenthesis first
 
             equation = FindNegativeNumsAndFix(equation);
+            equation = ExpandBrackets(equation);
             equation = ResolveBrackets(equation);
 
-            int operations = Operations(equation);
+            int operations = OperationCount(equation);
 
             if (operations == 0)
             {
@@ -136,12 +136,9 @@ namespace QuickMaffs
                 num2 += equation[i];
             }
 
-            if (!ParseComplex.TryParse(num1, out Complex number1))
-                return Complex.NaN;
-            if (!ParseComplex.TryParse(num2, out Complex number2))
-                return Complex.NaN;
+            _ = ParseComplex.TryParse(num1, out Complex number1);
+            _ = ParseComplex.TryParse(num2, out Complex number2);
 
-            rnd = new(rnd.Next());
             return oper.onSolve(number1, number2);
         }
 
@@ -179,7 +176,7 @@ namespace QuickMaffs
             return equation;
         }
 
-        private static int Operations(string s)
+        private static int OperationCount(string s)
         {
             int opers = 0;
             for (int i = 0; i < s.Length; i++)
@@ -189,6 +186,33 @@ namespace QuickMaffs
             }
 
             return opers;
+        }
+
+        private static string ExpandBrackets(string equation)
+        {
+            for (int i = 0; i < equation.Length; i++)
+            {
+                if (i <= 0)
+                    continue;
+                if (equation[i] != '(')
+                    continue;
+                if (!digits.Contains(equation[i - 1]))
+                    continue;
+
+                //There is a digit before the bracket.
+
+                string number = "";
+                for (int j = i - 1; j > 0; j--)
+                {
+                    if (digits.Contains(equation[j]))
+                        number = number.Insert(0, equation[j].ToString());
+                }
+
+                equation = equation.Insert(i, $"{number}*");
+                i -= number.Length + 2;
+            }
+
+            return equation;
         }
     }
 }
