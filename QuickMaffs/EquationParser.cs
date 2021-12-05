@@ -146,36 +146,44 @@ namespace QuickMaffs
 
         private static string ResolveBrackets(string equation)
         {
-            int parenthesisNestIndex = 0;
-            while (equation.Contains("("))
+            int bracketNestIndex = 0;
+            string currentBracket = "";
+
+            for (int i = 0; i < equation.Length; i++)
             {
-                string nestedEquation = "";
-                for (int i = 0; i < equation.Length; i++)
+                if (bracketNestIndex > 0)
+                    currentBracket += equation[i];
+
+                if (equation[i] == '(')
+                    bracketNestIndex++;
+                else if (equation[i] == ')')
                 {
-                    if (equation[i] == '(')
-                        parenthesisNestIndex++;
-                    else if (equation[i] == ')')
+                    bracketNestIndex--;
+                    if (bracketNestIndex == 0)
                     {
-                        parenthesisNestIndex--;
+                        currentBracket = currentBracket[..^1];
 
-                        if (parenthesisNestIndex == 0)
-                        {
-                            equation = equation.Replace($"({nestedEquation})", Solve(nestedEquation).ToMathematicalString());
-                            break;
-                        }
-                    }
-
-                    if (parenthesisNestIndex > 0)
-                    {
-                        if (i == 0 && equation[i] == '(')
-                            continue;
-
-                        nestedEquation += equation[i];
+                        equation = equation.Replace("(" + currentBracket + ")", Solve(currentBracket).ToMathematicalString());
                     }
                 }
             }
 
             return equation;
+        }
+
+        private static int BracketsBalanced(string equation)
+        {
+            int bracks = 0;
+
+            for (int i = 0; i < equation.Length; i++)
+            {
+                if (equation[i] == '(')
+                    bracks++;
+                else if (equation[i] == ')')
+                    bracks--;
+            }
+
+            return bracks;
         }
 
         private static int OperationCount(string s)
