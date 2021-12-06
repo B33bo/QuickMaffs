@@ -21,7 +21,7 @@ namespace QuickMaffs
             { "𝜏", Math.Tau },
             { "Φ", Constants.GoldenRatio },
         };
-        const string digits = "0123456789.,Eim";
+        public const string digits = "0123456789.,Eim";
 
         public static Complex Solve(string equation)
         {
@@ -32,6 +32,7 @@ namespace QuickMaffs
             //Look for parenthesis first
 
             equation = FindNegativeNumsAndFix(equation);
+            equation = FindVariables(equation);
             equation = ExpandBrackets(equation);
             equation = ResolveBrackets(equation);
 
@@ -53,6 +54,7 @@ namespace QuickMaffs
 
             //There are many operations (1+2/3 = 1.66666666666)
 
+            StringBuilder equationBuilder = new StringBuilder(equation);
             for (int i = 0; i < Operator.maxPemdasOrder + 1; i++)
             {
                 for (int j = 0; j < equation.Length; j++)
@@ -63,13 +65,28 @@ namespace QuickMaffs
                     if (oper.pemdasOrder != i)
                         continue;
 
-                    string insideEquation = GetNearestNumbers(equation, j);
-                    equation = equation.Replace(insideEquation, Solve(insideEquation).ToMathematicalString());
-                    //j = -1;
+                    string insideEquation = GetNearestNumbers(equation, j, out int left);
+
+                    string insideEquationSolution = FindNegativeNumsAndFix(Solve(insideEquation).ToMathematicalString());
+                    equationBuilder = equationBuilder.Replace(insideEquation, insideEquationSolution, left, insideEquation.Length);
+                    equation = equationBuilder.ToString();
+                    j = -1;
                 }
             }
 
             return Solve(equation);
+        }
+
+        private static string FindVariables(string Equation)
+        {
+            List<string> Keys = variables.Keys.ToList();
+            List<Complex> Values = variables.Values.ToList();
+            for (int i = 0; i < Keys.Count; i++)
+            {
+                Equation = Equation.Replace(Keys[i], Values[i].ToMathematicalString());
+            }
+
+            return Equation;
         }
 
         private static string FindNegativeNumsAndFix(string Equation)
@@ -84,7 +101,7 @@ namespace QuickMaffs
                         equation_StrBuilder[0] = 'm';
                     else
                     {
-                        if (Operator.TryParse(Equation[i-1].ToString(), out _))
+                        if (!digits.Contains(Equation[i-1]))
                             equation_StrBuilder[i] = 'm';
                     }
                 }
@@ -93,9 +110,11 @@ namespace QuickMaffs
             return equation_StrBuilder.ToString();
         }
 
-        public static string GetNearestNumbers(string Equation, int index)
+        public static string GetNearestNumbers(string Equation, int index, out int left)
         {
             string returnValue = Equation[index].ToString();
+            left = -1;
+
             for (int i = index + 1; i < Equation.Length; i++)
             {
                 if (!digits.Contains(Equation[i]))
@@ -109,6 +128,7 @@ namespace QuickMaffs
                 if (!digits.Contains(Equation[i]))
                     break;
                 returnValue = returnValue.Insert(0, Equation[i].ToString());
+                left = i;
             }
 
             return returnValue;
