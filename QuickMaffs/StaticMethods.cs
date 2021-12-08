@@ -14,6 +14,14 @@ namespace QuickMaffs
             if (complex.Imaginary == 0)
                 return complex.Real.ToString();
 
+            return $"{complex.Imaginary}i{complex.Real}";
+        }
+
+        public static string ToReadableMathematicalString(this Complex complex)
+        {
+            if (complex.Imaginary == 0)
+                return complex.Real.ToString();
+
             if (complex.Real == 0)
                 return complex.Imaginary.ToString() + "i";
 
@@ -64,7 +72,7 @@ namespace QuickMaffs
                 {
                     if (double.TryParse(splitByi[0], out res))
                     {
-                        result = new(res, 0);
+                        result = new(0, res);
                         return true;
                     }
                     return false;

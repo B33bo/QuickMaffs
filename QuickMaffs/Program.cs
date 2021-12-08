@@ -10,7 +10,7 @@ namespace QuickMaffs
         {
             while (true)
             {
-                Console.WriteLine(EquationParser.Solve(Console.ReadLine()).ToMathematicalString());
+                Console.WriteLine(EquationParser.Solve(Console.ReadLine()).ToReadableMathematicalString());
             }
         }
     }

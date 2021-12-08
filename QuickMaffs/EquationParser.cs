@@ -12,7 +12,6 @@ namespace QuickMaffs
     {
         public static Dictionary<string, Complex> variables = new()
         {
-            { "i", Complex.ImaginaryOne },
             { "π", Math.PI },
             { "e", Math.E },
             { "nan", Complex.NaN },
@@ -81,6 +80,7 @@ namespace QuickMaffs
         {
             List<string> Keys = variables.Keys.ToList();
             List<Complex> Values = variables.Values.ToList();
+
             for (int i = 0; i < Keys.Count; i++)
             {
                 Equation = Equation.Replace(Keys[i], Values[i].ToMathematicalString());
@@ -101,7 +101,7 @@ namespace QuickMaffs
                         equation_StrBuilder[0] = 'm';
                     else
                     {
-                        if (!digits.Contains(Equation[i-1]))
+                        if (!digits.Contains(Equation[i-1]) || Equation[i-1] == 'i')
                             equation_StrBuilder[i] = 'm';
                     }
                 }
