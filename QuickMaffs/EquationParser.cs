@@ -14,11 +14,11 @@ namespace QuickMaffs
         {
             { "π", Math.PI },
             { "e", Math.E },
-            { "nan", Complex.NaN },
             { "∞", double.PositiveInfinity },
             { "ε", double.Epsilon },
             { "𝜏", Math.Tau },
             { "Φ", Constants.GoldenRatio },
+            { "?", float.NaN },
         };
         public const string digits = "0123456789.,Eim";
 
@@ -34,8 +34,6 @@ namespace QuickMaffs
             equation = ExpandBrackets(equation);
             equation = ResolveBrackets(equation);
             equation = FindNegativeNumsAndFix(equation);
-
-            Console.WriteLine(equation);
 
             int operations = OperationCount(equation);
 
@@ -55,7 +53,7 @@ namespace QuickMaffs
 
             //There are many operations (1+2/3 = 1.66666666666)
 
-            StringBuilder equationBuilder = new StringBuilder(equation);
+            StringBuilder equationBuilder = new(equation);
             for (int i = 0; i < Operator.maxPemdasOrder + 1; i++)
             {
                 for (int j = 0; j < equation.Length; j++)
@@ -81,14 +79,36 @@ namespace QuickMaffs
         private static string FindVariables(string Equation)
         {
             List<string> Keys = variables.Keys.ToList();
-            List<Complex> Values = variables.Values.ToList();
 
-            for (int i = 0; i < Keys.Count; i++)
+            string newEq = "";
+            for (int i = 0; i < Equation.Length; i++)
             {
-                Equation = Equation.Replace(Keys[i], Values[i].ToMathematicalString());
+                if (Keys.Contains(Equation[i].ToString()))
+                {
+                    string newVar = variables[Equation[i].ToString()].ToMathematicalString();
+                    if (i == 0)
+                    {
+                        newEq += newVar;
+                        continue;
+                    }
+
+                    if (digits.Contains(Equation[i - 1]) || variables.ContainsKey(Equation[i - 1].ToString()))
+                        newEq += "*";
+
+                    newEq += newVar;
+
+                    if (Equation.Length > i+1)
+                    {
+                        if (digits.Contains(Equation[i + 1]) || variables.ContainsKey(Equation[i + 1].ToString()))
+                            newEq += "*";
+                    }
+
+                    continue;
+                }
+                newEq += Equation[i];
             }
 
-            return Equation;
+            return newEq;
         }
 
         private static string FindNegativeNumsAndFix(string Equation)
@@ -103,7 +123,7 @@ namespace QuickMaffs
                         equation_StrBuilder[0] = 'm';
                     else
                     {
-                        if (!digits.Contains(Equation[i-1]) || Equation[i-1] == 'i')
+                        if (!digits.Contains(Equation[i - 1]) || Equation[i - 1] == 'i' || Equation[i - 1] == 'E')
                             equation_StrBuilder[i] = 'm';
                     }
                 }
