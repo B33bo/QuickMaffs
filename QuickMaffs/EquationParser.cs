@@ -30,10 +30,12 @@ namespace QuickMaffs
             equation = equation.Trim().Replace(" ", "");
             //Look for parenthesis first
 
-            equation = FindNegativeNumsAndFix(equation);
             equation = FindVariables(equation);
             equation = ExpandBrackets(equation);
             equation = ResolveBrackets(equation);
+            equation = FindNegativeNumsAndFix(equation);
+
+            Console.WriteLine(equation);
 
             int operations = OperationCount(equation);
 
