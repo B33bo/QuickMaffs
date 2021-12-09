@@ -9,22 +9,28 @@ namespace QuickMaffs
 {
     public class Function
     {
-        public static Function[] functions =
+        public static Dictionary<string, Function> functions = new()
         {
-            new Function(1, (a, b) => Complex.Sin(a), "sin"),
-            new Function(1, (a, b) => Complex.Cos(a), "cos"),
-            new Function(1, (a, b) => Complex.Tan(a), "tan"),
+            { "sin", new Function(3, HardCodedFunctions.Sin) },
+            { "cos", new Function(3, HardCodedFunctions.Cos) },
+            { "tan", new Function(2, HardCodedFunctions.Tan) },
         };
 
-        public string name;
-        public int arguments;
-        public Func<Complex, Complex, Complex> onSolve;
+        public Func<string, string, string, Complex> operation;
+        public int bidmasIndex;
 
-        public Function(int args, Func<Complex, Complex, Complex> solve, string name)
+        public Function(string name, int bidmasIndex, Func<string, string, string, Complex> operation)
         {
-            arguments = args;
-            this.name = name;
-            onSolve = solve;
+            this.bidmasIndex = bidmasIndex;
+            this.operation = operation;
+
+            functions.Add(name, this);
+        }
+
+        public Function(int bidmasIndex, Func<string, string, string, Complex> operation)
+        {
+            this.bidmasIndex = bidmasIndex;
+            this.operation = operation;
         }
     }
 }

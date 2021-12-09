@@ -18,9 +18,11 @@ namespace QuickMaffs
                 "Φ = Golden Ratio\n" +
                 "? = NaN (Not a Number)\n" +
                 "i = Imaginary one\n");
+
+            Console.WriteLine(new Equation("14+1-4+-3+sin(4) - 5 + sin(5 + tan(3)) + 2 * (5+3) - 2"));
             while (true)
             {
-                Console.WriteLine(EquationParser.Solve(Console.ReadLine()).ToReadableMathematicalString());
+                //Console.WriteLine(EquationParser.Solve(Console.ReadLine()).ToReadableMathematicalString());
             }
         }
     }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MathNet.Numerics;
 
-namespace QuickMaffs
+/*namespace QuickMaffs
 {
     public static class EquationParser
     {
@@ -263,4 +263,4 @@ namespace QuickMaffs
             return equation;
         }
     }
-}
+}*/

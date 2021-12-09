@@ -49,6 +49,17 @@ namespace QuickMaffs
             }
             return str;
         }
+
+        public static string Readable(this List<string> array)
+        {
+            string str = "";
+
+            for (int i = 0; i < array.Count; i++)
+            {
+                str += array[i] + "\n";
+            }
+            return str;
+        }
     }
 
     public static class ParseComplex
