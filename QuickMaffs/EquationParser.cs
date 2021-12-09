@@ -19,6 +19,7 @@ namespace QuickMaffs
             { "𝜏", Math.Tau },
             { "Φ", Constants.GoldenRatio },
             { "?", float.NaN },
+            { "c", Constants.SpeedOfLight },
         };
         public const string digits = "0123456789.,Eim";
 
@@ -86,21 +87,21 @@ namespace QuickMaffs
                 if (Keys.Contains(Equation[i].ToString()))
                 {
                     string newVar = variables[Equation[i].ToString()].ToMathematicalString();
-                    if (i == 0)
+                    if (i > 0)
                     {
-                        newEq += newVar;
-                        continue;
+                        if (digits.Contains(Equation[i - 1]) || variables.ContainsKey(Equation[i - 1].ToString()))
+                            newEq += "*";
                     }
-
-                    if (digits.Contains(Equation[i - 1]) || variables.ContainsKey(Equation[i - 1].ToString()))
-                        newEq += "*";
 
                     newEq += newVar;
 
-                    if (Equation.Length > i+1)
+                    if (Equation.Length > i + 1)
                     {
-                        if (digits.Contains(Equation[i + 1]) || variables.ContainsKey(Equation[i + 1].ToString()))
+                        //Must NOT include 'variables.ContainsKey' because that is handled next iteration
+                        if (digits.Contains(Equation[i + 1]))
+                        {
                             newEq += "*";
+                        }
                     }
 
                     continue;
