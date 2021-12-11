@@ -21,6 +21,7 @@ namespace QuickMaffs
 
         public Func<Complex, Complex, Complex> operation;
         public int bidmasIndex;
+        public const int highestBidmas = 4;
 
         public Operator(string name, int bidmasIndex, Func<Complex, Complex, Complex> operation)
         {

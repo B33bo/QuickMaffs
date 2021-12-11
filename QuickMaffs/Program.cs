@@ -19,7 +19,11 @@ namespace QuickMaffs
                 "? = NaN (Not a Number)\n" +
                 "i = Imaginary one\n");
 
-            Console.WriteLine(new Equation("14+1-4+-3+sin(4) - 5 + sin(5 + tan(3)) + 2 * (5+3) - 2"));
+            //Console.WriteLine(new Equation("14+1-4+-3+sin(4) - 5 + sin(5 + tan(3), 2345) + 2 * (5+3) - 2").Solve());
+            //Console.WriteLine(new Equation("tan(sin(3))").Solve());
+            //Console.Write(2d / 3d);
+
+            Console.Write(new Equation("(sin(90) + 3) / 2").Solve());
             while (true)
             {
                 //Console.WriteLine(EquationParser.Solve(Console.ReadLine()).ToReadableMathematicalString());

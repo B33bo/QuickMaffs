@@ -11,18 +11,13 @@ namespace QuickMaffs
     {
         public static string ToMathematicalString(this Complex complex)
         {
-            string real = complex.Real.ToString();
-            if (real[0] == '-')
-                real = "-" + real[1..];
-
             if (complex.Imaginary == 0)
-                return real;
+                return complex.Real.ToString();
 
-            string imaginary = complex.Imaginary.ToString();
-            if (imaginary[0] == '-')
-                imaginary = "-" + imaginary[1..];
+            if (complex.Real == 0)
+                return complex.Imaginary == 1 ? "i" : $"{complex.Imaginary}i";
 
-            return $"{imaginary}i{real}";
+            return $"({complex.Imaginary}i + {complex.Real})";
         }
 
         public static string ToReadableMathematicalString(this Complex complex)
