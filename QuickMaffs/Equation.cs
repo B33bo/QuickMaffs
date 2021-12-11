@@ -10,7 +10,7 @@ namespace QuickMaffs
     public class Equation
     {
         private const string Digits = "01234567890E.";
-        private List<string> components = new();
+        private readonly List<string> components = new();
 
         enum ComponentType
         {
@@ -31,23 +31,10 @@ namespace QuickMaffs
                 if (input[i] == ' ')
                     continue;
 
-                if (input[i] == ',')
-                {
-                    if (nestIndex == 0)
-                    {
-                        components.Add(",");
-                        components.Add("");
-                    }
-                    else
-                    {
-                        components[^1] += ",";
-                    }
-                    continue;
-                }
-
                 if (input[i] == '(')
                 {
                     if (nestIndex == 0)
+                        //Make a new nested equation
                         components.Add("");
                     nestIndex++;
                 }
@@ -56,20 +43,30 @@ namespace QuickMaffs
                     nestIndex--;
                     components[^1] += input[i];
                     if (nestIndex == 0)
-                    {
+                        //Finally outside of nested equation
                         components.Add("");
-                    }
                     continue;
                 }
 
+                //Anything inside a nested equation will be ignored
                 if (nestIndex > 0)
                 {
                     components[^1] += input[i];
                     continue;
                 }
 
+                //Used for method seperation
+                if (input[i] == ',')
+                {
+                    components.Add(",");
+                    components.Add("");
+                    continue;
+                }
+
+                //Gets the type (number/operator/method)
                 ComponentType newType = TypeDetector(components[^1], input[i]);
 
+                //if it has changed, add a new component
                 if (type != newType)
                 {
                     components.Add("");
@@ -79,27 +76,35 @@ namespace QuickMaffs
                 components[^1] += input[i];
             }
 
+            //remove empty entries
             components.RemoveAll((a) => a == "");
-
-
-            Console.WriteLine(components.Readable());
 
             static ComponentType TypeDetector(string previous, char newCharacter)
             {
                 if (newCharacter == '-')
                 {
+                    //Could be a negative number or a subtraction
+
                     if (previous.Length == 0)
+                        //There is nothing before it
                         return ComponentType.Operator;
 
+                    if (previous[^1] == 'E')
+                        //E notation
+                        return ComponentType.Number;
+
                     if (Operator.operators.ContainsKey(previous[0]) || Function.functions.ContainsKey(previous))
+                        //The thing before it is an operator/function.
                         return ComponentType.Number;
 
                     return ComponentType.Operator;
                 }
 
                 if (Digits.Contains(newCharacter))
+                    //It's a digit
                     return ComponentType.Number;
 
+                //If it's an operator, treat it as one
                 return Operator.operators.ContainsKey(newCharacter) ? ComponentType.Operator : ComponentType.Function;
             }
         }
@@ -111,7 +116,11 @@ namespace QuickMaffs
             for (int i = 0; i < components.Count; i++)
             {
                 if (components[i].StartsWith('(') && components[i].EndsWith(')'))
-                    components[i] = new Equation(components[i][1..^1]).Solve();
+                {
+                    //Solve nested equations here
+                    string newEq = new Equation(components[i][1..^1]).Solve();
+                    components[i] = newEq;
+                }
             }
 
             for (int i = 0; i < components.Count; i++)
@@ -134,6 +143,8 @@ namespace QuickMaffs
                 i--;
             }
 
+
+            //Solve the operators, in bidmas order
             for (int j = 0; j < Operator.highestBidmas; j++)
             {
                 for (int i = 0; i < components.Count; i++)
@@ -153,19 +164,13 @@ namespace QuickMaffs
 
                     components[i] = oper.operation(a, b).ToMathematicalString();
 
+                    //Removes the numbers before and after it
                     components.RemoveAt(i - 1);
                     components.RemoveAt(i);
                 }
             }
 
-            //Found and resolved methods.
-
-            return components[0];
-        }
-
-        public string[] Solutions()
-        {
-            return new string[] { Solve() };
+            return components.Readable();
         }
     }
 }

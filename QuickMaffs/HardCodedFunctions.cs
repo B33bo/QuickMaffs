@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MathNet.Numerics;
 
 namespace QuickMaffs
 {
@@ -28,6 +29,55 @@ namespace QuickMaffs
             return Complex.Tan(newComplex);
         }
 
+        public static Complex SinH(string[] parameters)
+        {
+            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
+            return Complex.Sinh(newComplex);
+        }
+
+        public static Complex CosH(string[] parameters)
+        {
+            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
+            return Complex.Cosh(newComplex);
+        }
+
+        public static Complex TanH(string[] parameters)
+        {
+            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
+            return Complex.Tanh(newComplex);
+        }
+
+        public static Complex Asin(string[] parameters)
+        {
+            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
+            return Complex.Asin(newComplex);
+        }
+
+        public static Complex Acos(string[] parameters)
+        {
+            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
+            return Complex.Acos(newComplex);
+        }
+
+        public static Complex Atan(string[] parameters)
+        {
+            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
+            return Complex.Atan(newComplex);
+        }
+
+        public static Complex Log(string[] parameters)
+        {
+            _ = ParseComplex.TryParse(parameters[0], out Complex a);
+            _ = ParseComplex.TryParse(parameters[1], out Complex b);
+            return Complex.Log(a, b.Real);
+        }
+
+        public static Complex LN(string[] parameters)
+        {
+            _ = ParseComplex.TryParse(parameters[0], out Complex a);
+            return Complex.Log(a);
+        }
+
         public static Complex Rand(string[] parameters)
         {
             if (rnd == null)
@@ -42,6 +92,18 @@ namespace QuickMaffs
             rnd = new(rnd.Next());
 
             return new(real, imag);
+        }
+
+        public static Complex Gamma(string[] parameters)
+        {
+            _ = ParseComplex.TryParse(parameters[0], out Complex a);
+
+            return SpecialFunctions.Gamma(a.Real);
+        }
+
+        public static Complex Factorial(Complex a, Complex b)
+        {
+            return SpecialFunctions.Gamma(a.Real+1);
         }
     }
 }

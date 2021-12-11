@@ -17,6 +17,8 @@ namespace QuickMaffs
             { '-', new Operator(3, (a, b) => a - b) },
             { '*', new Operator(2, (a, b) => a * b) },
             { '/', new Operator(2, (a, b) => a / b) },
+            { '^', new Operator(1, Complex.Pow) },
+            { '!', new Operator(1, HardCodedFunctions.Factorial) },
         };
 
         public Func<Complex, Complex, Complex> operation;

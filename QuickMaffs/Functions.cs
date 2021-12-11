@@ -11,26 +11,30 @@ namespace QuickMaffs
     {
         public static Dictionary<string, Function> functions = new()
         {
-            { "sin", new Function(3, HardCodedFunctions.Sin) },
-            { "cos", new Function(3, HardCodedFunctions.Cos) },
-            { "tan", new Function(2, HardCodedFunctions.Tan) },
-            { "rand", new Function(2, HardCodedFunctions.Rand) },
+            { "sin", new Function(HardCodedFunctions.Sin) },
+            { "sinh", new Function(HardCodedFunctions.SinH) },
+            { "asin", new Function(HardCodedFunctions.Asin) },
+            { "cos", new Function(HardCodedFunctions.Cos) },
+            { "acos", new Function(HardCodedFunctions.Acos) },
+            { "cosh", new Function(HardCodedFunctions.CosH) },
+            { "tan", new Function(HardCodedFunctions.Tan) },
+            { "atan", new Function(HardCodedFunctions.Atan) },
+            { "tanh", new Function(HardCodedFunctions.TanH) },
+            { "rand", new Function(HardCodedFunctions.Rand) },
+            { "Γ", new Function(HardCodedFunctions.Gamma) },
         };
 
         public Func<string[], Complex> operation;
-        public int bidmasIndex;
 
-        public Function(string name, int bidmasIndex, Func<string[], Complex> operation)
+        public Function(string name, Func<string[], Complex> operation)
         {
-            this.bidmasIndex = bidmasIndex;
             this.operation = operation;
 
             functions.Add(name, this);
         }
 
-        public Function(int bidmasIndex, Func<string[], Complex> operation)
+        public Function(Func<string[], Complex> operation)
         {
-            this.bidmasIndex = bidmasIndex;
             this.operation = operation;
         }
     }

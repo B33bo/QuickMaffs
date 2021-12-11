@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-//2(2+2)-1.5(3+3)
-//(2+2)(4+4)
+//FIX FACTORIALS
 namespace QuickMaffs
 {
     class Program
@@ -23,11 +22,8 @@ namespace QuickMaffs
             //Console.WriteLine(new Equation("tan(sin(3))").Solve());
             //Console.Write(2d / 3d);
 
-            Console.Write(new Equation("(sin(90) + 3) / 2").Solve());
-            while (true)
-            {
-                //Console.WriteLine(EquationParser.Solve(Console.ReadLine()).ToReadableMathematicalString());
-            }
+            Console.WriteLine(new Equation(Console.ReadLine()).Solve());
+            Console.WriteLine("DONE");
         }
     }
 }
