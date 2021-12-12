@@ -105,5 +105,34 @@ namespace QuickMaffs
         {
             return SpecialFunctions.Gamma(a.Real+1);
         }
+
+        public static Complex Total(string[] parameters)
+        {
+            Complex value = 0;
+
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (ParseComplex.TryParse(parameters[i], out Complex newComplex))
+                    value += newComplex;
+            }
+            return value;
+        }
+
+        public static Complex Min(string[] parameters)
+        {
+            Complex min = 0;
+
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (ParseComplex.TryParse(parameters[i], out Complex newComplex))
+                {
+                    if (newComplex.Real < min.Real)
+                        min = new(newComplex.Real, min.Imaginary);
+                    if (newComplex.Imaginary < min.Imaginary)
+                        min = new(min.Real, newComplex.Imaginary);
+                }
+            }
+            return min;
+        }
     }
 }

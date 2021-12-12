@@ -37,13 +37,13 @@ namespace QuickMaffs
             return $"{complex.Imaginary}i + {complex.Real}";
         }
 
-        public static string Readable(this string[] array)
+        public static string Readable(this string[] array, char seperator)
         {
             string str = "";
 
             for (int i = 0; i < array.Length; i++)
             {
-                str += array[i];
+                str += array[i] + seperator;
             }
             return str;
         }
@@ -62,13 +62,13 @@ namespace QuickMaffs
 
     public static class ParseComplex
     {
-        //FORMAT: 3i1 = 3i + 1
         public static bool TryParse(string s, out Complex result)
         {
-            s = s.Replace("m", "-");
-            s = s.Replace(",", "");
-
             result = 0;
+            if (s == null)
+                return false;
+
+            s = s.Replace(",", "");
             if (double.TryParse(s, out double res))
             {
                 result = res;

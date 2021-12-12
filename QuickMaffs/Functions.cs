@@ -21,7 +21,10 @@ namespace QuickMaffs
             { "atan", new Function(HardCodedFunctions.Atan) },
             { "tanh", new Function(HardCodedFunctions.TanH) },
             { "rand", new Function(HardCodedFunctions.Rand) },
+            { "log", new Function(HardCodedFunctions.Log) },
+            { "ln", new Function(HardCodedFunctions.LN) },
             { "Γ", new Function(HardCodedFunctions.Gamma) },
+            { "total", new Function(HardCodedFunctions.Total) },
         };
 
         public Func<string[], Complex> operation;

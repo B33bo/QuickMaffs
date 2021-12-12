@@ -9,7 +9,8 @@ namespace QuickMaffs
         static void Main(string[] args)
         {
             Console.ResetColor();
-            Console.WriteLine("π = Pi\n" +
+            Console.WriteLine("" +
+                "π = Pi\n" +
                 "e = Euler's constant\n" +
                 "∞ = infinity\n" +
                 "ε = Epsilon\n" +
@@ -22,7 +23,9 @@ namespace QuickMaffs
             //Console.WriteLine(new Equation("tan(sin(3))").Solve());
             //Console.Write(2d / 3d);
 
-            Console.WriteLine(new Equation(Console.ReadLine()).Solve());
+            Equation eq = new(Console.ReadLine());
+            Console.WriteLine(eq.ToString() + "=");
+            Console.WriteLine(eq.Solve());
             Console.WriteLine("DONE");
         }
     }
