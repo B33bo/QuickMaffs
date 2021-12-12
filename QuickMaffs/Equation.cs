@@ -79,6 +79,58 @@ namespace QuickMaffs
             //remove empty entries
             components.RemoveAll((a) => a == "");
 
+            //Variables
+            for (int i = 0; i < components.Count; i++)
+            {
+                if (Operator.operators.ContainsKey(components[i][0]))
+                    continue;
+
+                if (Function.functions.ContainsKey(components[i]))
+                    continue;
+
+                for (int j = 0; j < components[i].Length; j++)
+                {
+                    if (Digits.Contains(components[i][j]))
+                        continue;
+
+                    if (components[i][j] == '(' || components[i][j] == ')')
+                        break;
+
+                    if (!Variables.variables.ContainsKey(components[i][j]))
+                        continue;
+
+                    //Found a non-digit, non-operator, non-function letter
+                    //Must be a variable
+
+                    if (components[i].Length != 1)
+                    {
+                        //it's got more than 1 vars
+                        string currentBit = components[i];
+                        components[i] = Variables.variables[components[i][j]].ToMathematicalString();
+                        components.Insert(i + 1, "*");
+                        components.Insert(i + 2, currentBit[(j+1)..]);
+                        continue;
+                    }
+
+                    if (i == 0)
+                    {
+                        components[i] = Variables.variables[components[i][j]].ToMathematicalString();
+                        continue;
+                    }
+
+                    string beforeVariable = components[i - 1];
+
+                    if (ParseComplex.TryParse(beforeVariable, out _))
+                    {
+                        components[i] = Variables.variables[components[i][j]].ToMathematicalString();
+                        components.Insert(i, "*");
+                        continue;
+                    }
+                    components[i] = Variables.variables[components[i][j]].ToMathematicalString();
+                }
+            }
+
+
             static ComponentType TypeDetector(string previous, char newCharacter)
             {
                 if (newCharacter == '-')
@@ -167,10 +219,26 @@ namespace QuickMaffs
                     //Removes the numbers before and after it
                     components.RemoveAt(i - 1);
                     components.RemoveAt(i);
+
+                    j = -1;
+                    break;
                 }
             }
 
-            return components.Readable();
+            //return components.Readable();
+            return components[0];
+        }
+
+        public override string ToString()
+        {
+            string str = "";
+
+            for (int i = 0; i < components.Count; i++)
+            {
+                str += components[i];
+            }
+
+            return str;
         }
     }
 }

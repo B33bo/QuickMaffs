@@ -17,7 +17,10 @@ namespace QuickMaffs
             if (complex.Real == 0)
                 return complex.Imaginary == 1 ? "i" : $"{complex.Imaginary}i";
 
-            return $"({complex.Imaginary}i + {complex.Real})";
+            if (complex.Imaginary == 1)
+                return $"i + {complex.Real}";
+
+            return $"{complex.Imaginary}i + {complex.Real}";
         }
 
         public static string ToReadableMathematicalString(this Complex complex)
