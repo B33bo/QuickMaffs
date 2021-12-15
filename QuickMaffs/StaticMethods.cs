@@ -14,26 +14,17 @@ namespace QuickMaffs
             if (complex.Imaginary == 0)
                 return complex.Real.ToString();
 
+            if (complex.Imaginary == -1 && complex.Real == 0)
+                return "-i";
+
             if (complex.Real == 0)
                 return complex.Imaginary == 1 ? "i" : $"{complex.Imaginary}i";
 
             if (complex.Imaginary == 1)
                 return $"i + {complex.Real}";
 
-            return $"{complex.Imaginary}i + {complex.Real}";
-        }
-
-        public static string ToReadableMathematicalString(this Complex complex)
-        {
-            if (complex.Imaginary == 0)
-                return complex.Real.ToString();
-
-            if (complex.Real == 0)
-                return complex.Imaginary.ToString() + "i";
-
-            if (complex.Imaginary == 1)
-                return $"i + {complex.Real}";
-
+            if (complex.Imaginary == -1)
+                return $"-i + {complex.Real}";
             return $"{complex.Imaginary}i + {complex.Real}";
         }
 
@@ -48,15 +39,24 @@ namespace QuickMaffs
             return str;
         }
 
-        public static string Readable(this List<string> array)
+        public static string Readable(this List<string> array, string seperator)
         {
             string str = "";
 
             for (int i = 0; i < array.Count; i++)
             {
-                str += array[i] + "\n";
+                str += array[i] + seperator;
             }
             return str;
+        }
+
+        public static string GetPath(string RelativeLoc)
+        {
+            List<string> currentDir = System.Reflection.Assembly.GetEntryAssembly().Location.Split(@"\").ToList();
+
+            currentDir.RemoveAt(currentDir.Count - 1);
+            string path = currentDir.Readable(@"\");
+            return path + RelativeLoc;
         }
     }
 
@@ -68,7 +68,8 @@ namespace QuickMaffs
             if (s == null)
                 return false;
 
-            s = s.Replace(",", "");
+            s = s.Replace(" ", "");
+
             if (double.TryParse(s, out double res))
             {
                 result = res;

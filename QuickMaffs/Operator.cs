@@ -16,15 +16,21 @@ namespace QuickMaffs
             { '+', new Operator(3, (a, b) => a + b) },
             { '-', new Operator(3, (a, b) => a - b) },
             { '*', new Operator(2, (a, b) => a * b) },
+            { '×', new Operator(2, (a, b) => a * b) },
             { '/', new Operator(2, (a, b) => a / b) },
+            { '÷', new Operator(2, (a, b) => a * b) },
             { '^', new Operator(1, Complex.Pow) },
-            { '√', new Operator(1, (a, b) => Complex.Pow(b, 1/a)) },
+            { '√', new Operator(1, (a, b) => Complex.Pow(b, 1 / a)) },
             { '!', new Operator(1, HardCodedFunctions.Factorial) },
+            { '=', new Operator(4, (a, b) => (a == b) ? 1 : -1) },
+            { '≠', new Operator(4, (a, b) => (a != b) ? 1 : -1) },
+            { '>', new Operator(4, HardCodedFunctions.GreaterThan) },
+            { '<', new Operator(4, HardCodedFunctions.LessThan) },
         };
 
         public Func<Complex, Complex, Complex> operation;
         public int bidmasIndex;
-        public const int highestBidmas = 4;
+        public const int highestBidmas = 5;
 
         public Operator(string name, int bidmasIndex, Func<Complex, Complex, Complex> operation)
         {

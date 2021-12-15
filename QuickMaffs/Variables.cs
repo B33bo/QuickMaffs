@@ -12,12 +12,12 @@ namespace QuickMaffs
     {
         public static Dictionary<char, Complex> variables = new()
         {
-            { 'e', Math.E},
-            { 'π', Math.PI},
-            { 'ε', double.Epsilon},
+            { 'e', Math.E },
+            { 'π', Math.PI },
+            { 'ε', double.Epsilon },
             { 'Φ', Constants.GoldenRatio},
             { 'i', Complex.ImaginaryOne},
-            { '∞', double.PositiveInfinity},
+            { '∞', double.PositiveInfinity },
             { '?', double.NaN},
         };
     }

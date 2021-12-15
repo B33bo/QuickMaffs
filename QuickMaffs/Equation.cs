@@ -80,19 +80,30 @@ namespace QuickMaffs
             //remove empty entries
             components.RemoveAll((a) => a == "");
             //Variables
+
+            bool isSpeechMarks = false;
             for (int i = 0; i < components.Count; i++)
             {
                 if (components[i].StartsWith("(") && components[i].EndsWith(")"))
                     continue;
 
-                if (components[i].Contains(","))
-                    continue;
+                if (!components[i].Contains("\""))
+                {
+                    if (components[i].Contains(","))
+                        continue;
 
-                if (Function.functions.ContainsKey(components[i]))
-                    continue;
+                    if (Function.functions.ContainsKey(components[i]))
+                        continue;
+                }
 
                 if (components[i].Length == 1)
                 {
+                    if (components[i][0] == '"')
+                    {
+                        isSpeechMarks = !isSpeechMarks;
+                        continue;
+                    }
+
                     if (!Variables.variables.ContainsKey(components[i][0]))
                         continue;
 
@@ -109,6 +120,19 @@ namespace QuickMaffs
                     string newEquationInnerds = "";
                     for (int j = 0; j < components[i].Length; j++)
                     {
+                        if (components[i][j] == '"')
+                        {
+                            isSpeechMarks = !isSpeechMarks;
+                            newEquationInnerds += components[i][j];
+                            continue;
+                        }
+
+                        if (isSpeechMarks)
+                        {
+                            newEquationInnerds += components[i][j];
+                            continue;
+                        }
+
                         if (Variables.variables.ContainsKey(components[i][j]))
                         {
                             if (j >= 1)
@@ -120,7 +144,7 @@ namespace QuickMaffs
 
                             newEquationInnerds += Variables.variables[components[i][j]].ToMathematicalString();
 
-                            if (j < components[i].Length-1)
+                            if (j < components[i].Length - 1)
                             {
                                 if (!Operator.operators.ContainsKey(components[i][j + 1]))
                                     newEquationInnerds += "*";
@@ -144,7 +168,7 @@ namespace QuickMaffs
 
                     if (previous.Length == 0)
                         //There is nothing before it
-                        return ComponentType.Operator;
+                        return ComponentType.Number;
 
                     if (previous[^1] == 'E')
                         //E notation
@@ -166,8 +190,18 @@ namespace QuickMaffs
             }
         }
 
+        public Equation(List<string> components)
+        {
+            this.components = components;
+        }
+
         public string Solve()
         {
+            if (components.Count == 0)
+                return "0";
+
+            if (components[0] == "-")
+                components.Insert(0, "0");
             //Solve functions first
 
             for (int i = 0; i < components.Count; i++)
@@ -206,7 +240,11 @@ namespace QuickMaffs
                 {
                     //Thanks to the mostly annoying code suggestions bot, I fixed the bug
                     //It helpfully told me to replace the solvedParams[i] to a [j]
-                    solvedParams[j] = new Equation(functionParamsString[j]).Solve();
+                    string newStr = new Equation(functionParamsString[j]).Solve();
+                    if (newStr.StartsWith("\"") && newStr.EndsWith("\""))
+                        newStr = newStr[1..^1];
+
+                    solvedParams[j] = newStr;
                 }
 
                 components[i] = Function.functions[components[i]].operation(solvedParams).ToMathematicalString();
