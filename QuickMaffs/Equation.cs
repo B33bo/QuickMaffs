@@ -18,6 +18,29 @@ namespace QuickMaffs
             Operator,
             Function,
             NestedEquation,
+            Factorial,
+        }
+
+        private static bool IsExpandable(List<string> input)
+        {
+            if (input.Count < 1)
+                return false;
+
+            string current = input[^1];
+
+            if (current.Length == 0)
+            {
+                if (input.Count == 1)
+                    return false;
+
+                current = input[^2];
+            }
+
+            if (Operator.operators.ContainsKey(current[0]))
+                return false;
+            if (Function.functions.ContainsKey(current))
+                return false;
+            return true;
         }
 
         public Equation(string input)
@@ -34,8 +57,14 @@ namespace QuickMaffs
                 if (input[i] == '(')
                 {
                     if (nestIndex == 0)
+                    {
+                        bool isExpandable = IsExpandable(components);
+
+                        if (isExpandable)
+                            components.Add("*");
                         //Make a new nested equation
                         components.Add("");
+                    }
                     nestIndex++;
                 }
                 else if (input[i] == ')')
@@ -265,16 +294,28 @@ namespace QuickMaffs
                         continue;
 
                     Complex a = Complex.NaN, b = Complex.NaN;
-                    if (i + 1 < components.Count)
+                    if (i-1 >= 0)
                         _ = ParseComplex.TryParse(components[i - 1], out a);
-                    if (i - 1 >= 0)
+                    if (components.Count > i + 1)
                         _ = ParseComplex.TryParse(components[i + 1], out b);
 
                     components[i] = oper.operation(a, b).ToMathematicalString();
 
                     //Removes the numbers before and after it
-                    components.RemoveAt(i - 1);
-                    components.RemoveAt(i);
+                    switch (oper.direction)
+                    {
+                        case OperatorDirection.left:
+                            components.RemoveAt(i - 1);
+                            break;
+                        case OperatorDirection.right:
+                            components.RemoveAt(i + 1);
+                            break;
+                        case OperatorDirection.both:
+                        default:
+                            components.RemoveAt(i - 1);
+                            components.RemoveAt(i);
+                            break;
+                    }
 
                     j = -1;
                     break;

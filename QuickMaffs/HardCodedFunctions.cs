@@ -322,7 +322,6 @@ namespace QuickMaffs
             else
                 Variables.variables.Add(varName, value);
 
-            Console.WriteLine($"set {varName} to {value}");
             return value;
         }
 

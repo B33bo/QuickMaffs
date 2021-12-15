@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Numerics;
 
 //FIX FACTORIALS
@@ -9,12 +10,8 @@ namespace QuickMaffs
     {
         static void Main(string[] args)
         {
+            //Console.WriteLine(File.ReadAllText(StaticMethods.GetPath("HelpPage.txt")));
             Console.ResetColor();
-
-            Test.TestMethods();
-            //Console.WriteLine(new Equation("14+1-4+-3+sin(4) - 5 + sin(5 + tan(3), 2345) + 2 * (5+3) - 2").Solve());
-            //Console.WriteLine(new Equation("tan(sin(3))").Solve());
-            //Console.Write(2d / 3d);
 
             while (true)
             {

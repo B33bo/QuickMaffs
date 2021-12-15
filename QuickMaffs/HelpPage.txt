@@ -1,66 +1,66 @@
 ﻿Digits::
-0,1,2,3,4,5,6,7,8,9
+	0,1,2,3,4,5,6,7,8,9
 
 Operators::
-+ - Addition (a+b)
-- - Subtraction (a-b)
-*/× - Multiplication (a*b)
-//÷ - Division (a/b)
-^ - Power (aᵇ)
-√ - Root (ath root of b)
-! - Factorial (let a=5. a! = 1*2*3*4*5)
-= - Equals (if a = b: 1, else: -1)
-≠ - Not Equal To (if a = b: -1, else: 1)
-> - Greater than (if a > b: 1, else: -1)
-< - Greater than (if a < b: 1, else: -1)
-( - Opening bracket (a*(b+b) -> a*2b)
-) - Closing bracket (a*(b+b) -> a*2b)
-E - E-notation (a * 10^E)
+	+ - Addition (a+b)
+	- - Subtraction (a-b)
+	*/× - Multiplication (a*b)
+	//÷ - Division (a/b)
+	^ - Power (aᵇ)
+	√ - Root (ath root of b)
+	! - Factorial (let a=5. a! = 1*2*3*4*5)
+	= - Equals (if a = b: 1, else: -1)
+	≠ - Not Equal To (if a = b: -1, else: 1)
+	> - Greater than (if a > b: 1, else: -1)
+	< - Greater than (if a < b: 1, else: -1)
+	( - Opening bracket (a*(b+b) -> a*2b)
+	) - Closing bracket (a*(b+b) -> a*2b)
+	E - E-notation (a * 10^E)
 
 Variables::
-e - Euler's constant (2.71...)
-π - Pi (3.1415926...)
-ε - Epsilon / smallest possible value (4.94... * 10^-304)
-Φ - Golden Ratio (1.61)
-i - Imaginary one (i)
-∞ - Infinity (infinity)
-? - Invalid number (NaN)
+	e - Euler's constant (2.71...)
+	π - Pi (3.1415926...)
+	ε - Epsilon / smallest possible value (4.94... * 10^-304)
+	Φ - Golden Ratio (1.61)
+	i - Imaginary one (i)
+	∞ - Infinity (infinity)
+	? - Invalid number (NaN)
 
 Functions::
-*"any" means that you can enter an unlimited amount of parameters
+	*"any" means that you can enter an unlimited amount of parameters
 
-sin(n)								-The sine function
-sinh(n)								-The hyperbolic sine function
-asin(n)								-The inverse sine function
-cos(n)								-The cosine function
-cosh(n)								-The hyperbolic cosine function
-acos(n)								-The inverse cosine function
-tan(n)								-The tangent function
-tanh(n)								-The hyperbolic tan function
-atan(n)								-The inverse tan function
-rand(a,b)							-A random number between A & B
-log(a,base)							-Logarithm of a number (a^b = c) so (log(c,a) = a)
-ln(n)								-Natural log (log(a, e)) where e = 2.71...
-Γ(n)								-Gamma function
-total(any)							-The sum of all numbers
-min(any)							-The smallest of all numbers
-max(any)							-The biggest of all numbers
-mean(any)							-The Mean of all numbers (total / length)
-len(any)							-The amount of parameters
-real(n)								-The real part of the input
-imaginary(n)						-The imaginary part of the input
-hcf(any)							-The highest common factor of all elements
-gcd(any)							-The greatest common divisor of all elements (same as hcf)
-lcm(any)							-The lowest common multiple of all elements
-mod(a, b)							-The modulus of a number (remainder of the division)
-sign(n)								-Returns 1 if it's positive, -1 if negative, and 0 if neither (0)
-magnitude(n)						-The length of the complex number from 0
-phase(n)							-The rotation of the complex number from 0
-nPr(n,p)							-(n!) / (n-r)!
-nCr(n,r)							-n! / ((n – r)! r!) n
-abs(n)								-The absolute value of the number (forced to be positive)
-set(name,val)						-Assigns a variable to a value
-convert(type, number, from, to)		-Converts between a given metric
+	sin(n)								-The sine function
+	sinh(n)								-The hyperbolic sine function
+	asin(n)								-The inverse sine function
+	cos(n)								-The cosine function
+	cosh(n)								-The hyperbolic cosine function
+	acos(n)								-The inverse cosine function
+	tan(n)								-The tangent function
+	tanh(n)								-The hyperbolic tan function
+	atan(n)								-The inverse tan function
+	rand(a,b)							-A random number between A & B
+	log(a,base)							-Logarithm of a number (a^b = c) so (log(c,a) = a)
+	ln(n)								-Natural log (log(a, e)) where e = 2.71...
+	Γ(n)								-Gamma function
+	total(any)							-The sum of all numbers
+	min(any)							-The smallest of all numbers
+	max(any)							-The biggest of all numbers
+	mean(any)							-The Mean of all numbers (total / length)
+	len(any)							-The amount of parameters
+	real(n)								-The real part of the input
+	imaginary(n)						-The imaginary part of the input
+	hcf(any)							-The highest common factor of all elements
+	gcd(any)							-The greatest common divisor of all elements (same as hcf)
+	lcm(any)							-The lowest common multiple of all elements
+	mod(a, b)							-The modulus of a number (remainder of the division)
+	sign(n)								-Returns 1 if it's positive, -1 if negative, and 0 if neither (0)
+	magnitude(n)						-The length of the complex number from 0
+	phase(n)							-The rotation of the complex number from 0
+	nPr(n,p)							-(n!) / (n-r)!
+	nCr(n,r)							-n! / ((n – r)! r!) n
+	abs(n)								-The absolute value of the number (forced to be positive)
+	set(name,val)						-Assigns a variable to a value
+	convert(type, number, from, to)		-Converts between a given metric
 
 Conversions::
 	Angle::
