@@ -9,22 +9,55 @@ namespace QuickMaffs
 {
     public class Function
     {
-        public static Function[] functions =
+        public static Dictionary<string, Function> functions = new()
         {
-            new Function(1, (a, b) => Complex.Sin(a), "sin"),
-            new Function(1, (a, b) => Complex.Cos(a), "cos"),
-            new Function(1, (a, b) => Complex.Tan(a), "tan"),
+            { "sin", new Function(HardCodedFunctions.Sin) },
+            { "sinh", new Function(HardCodedFunctions.SinH) },
+            { "asin", new Function(HardCodedFunctions.Asin) },
+            { "cos", new Function(HardCodedFunctions.Cos) },
+            { "cosh", new Function(HardCodedFunctions.CosH) },
+            { "acos", new Function(HardCodedFunctions.Acos) },
+            { "tan", new Function(HardCodedFunctions.Tan) },
+            { "tanh", new Function(HardCodedFunctions.TanH) },
+            { "atan", new Function(HardCodedFunctions.Atan) },
+            { "rand", new Function(HardCodedFunctions.Rand) },
+            { "log", new Function(HardCodedFunctions.Log) },
+            { "ln", new Function(HardCodedFunctions.LN) },
+            { "Γ", new Function(HardCodedFunctions.Gamma) },
+            { "total", new Function(HardCodedFunctions.Total) },
+            { "min", new Function(HardCodedFunctions.Min) },
+            { "max", new Function(HardCodedFunctions.Max) },
+            { "mean", new Function(HardCodedFunctions.Mean) },
+            { "len", new Function(HardCodedFunctions.Len) },
+            { "real", new Function(HardCodedFunctions.Real) },
+            { "imaginary", new Function(HardCodedFunctions.Imaginary) },
+            { "hcf", new Function(HardCodedFunctions.HCF) },
+            { "gcd", new Function(HardCodedFunctions.HCF) },
+            { "lcm", new Function(HardCodedFunctions.LCM) },
+            { "mod", new Function(HardCodedFunctions.Mod) },
+            { "sign", new Function(HardCodedFunctions.Sign) },
+            { "magnitude", new Function(HardCodedFunctions.Magnitude) },
+            { "phase", new Function(HardCodedFunctions.Phase) },
+            { "nPr", new Function(HardCodedFunctions.NpR) },
+            { "nCr", new Function(HardCodedFunctions.NcR) },
+            { "abs", new Function(HardCodedFunctions.Abs) },
+            { "set", new Function(HardCodedFunctions.Set)},
+            { "convert", new Function(HardCodedFunctions.Conversion)},
+            { "theanswertolifetheuniverseandeverything", new Function((_) => 42)},
         };
 
-        public string name;
-        public int arguments;
-        public Func<Complex, Complex, Complex> onSolve;
+        public Func<string[], Complex> operation;
 
-        public Function(int args, Func<Complex, Complex, Complex> solve, string name)
+        public Function(string name, Func<string[], Complex> operation)
         {
-            arguments = args;
-            this.name = name;
-            onSolve = solve;
+            this.operation = operation;
+
+            functions.Add(name, this);
+        }
+
+        public Function(Func<string[], Complex> operation)
+        {
+            this.operation = operation;
         }
     }
 }

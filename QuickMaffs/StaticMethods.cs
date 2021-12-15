@@ -11,55 +11,65 @@ namespace QuickMaffs
     {
         public static string ToMathematicalString(this Complex complex)
         {
-            string real = complex.Real.ToString();
-            if (real[0] == '-')
-                real = "-" + real[1..];
-
-            if (complex.Imaginary == 0)
-                return real;
-
-            string imaginary = complex.Imaginary.ToString();
-            if (imaginary[0] == '-')
-                imaginary = "-" + imaginary[1..];
-
-            return $"{imaginary}i{real}";
-        }
-
-        public static string ToReadableMathematicalString(this Complex complex)
-        {
             if (complex.Imaginary == 0)
                 return complex.Real.ToString();
 
+            if (complex.Imaginary == -1 && complex.Real == 0)
+                return "-i";
+
             if (complex.Real == 0)
-                return complex.Imaginary.ToString() + "i";
+                return complex.Imaginary == 1 ? "i" : $"{complex.Imaginary}i";
 
             if (complex.Imaginary == 1)
                 return $"i + {complex.Real}";
 
+            if (complex.Imaginary == -1)
+                return $"-i + {complex.Real}";
             return $"{complex.Imaginary}i + {complex.Real}";
         }
 
-        public static string Readable(this string[] array)
+        public static string Readable(this string[] array, char seperator)
         {
             string str = "";
 
             for (int i = 0; i < array.Length; i++)
             {
-                str += array[i];
+                str += array[i] + seperator;
             }
             return str;
+        }
+
+        public static string Readable(this List<string> array, string seperator)
+        {
+            string str = "";
+
+            for (int i = 0; i < array.Count; i++)
+            {
+                str += array[i] + seperator;
+            }
+            return str;
+        }
+
+        public static string GetPath(string RelativeLoc)
+        {
+            List<string> currentDir = System.Reflection.Assembly.GetEntryAssembly().Location.Split(@"\").ToList();
+
+            currentDir.RemoveAt(currentDir.Count - 1);
+            string path = currentDir.Readable(@"\");
+            return path + RelativeLoc;
         }
     }
 
     public static class ParseComplex
     {
-        //FORMAT: 3i1 = 3i + 1
         public static bool TryParse(string s, out Complex result)
         {
-            s = s.Replace("m", "-");
-            s = s.Replace(",", "");
-
             result = 0;
+            if (s == null)
+                return false;
+
+            s = s.Replace(" ", "");
+
             if (double.TryParse(s, out double res))
             {
                 result = res;
