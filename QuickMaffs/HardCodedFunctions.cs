@@ -98,6 +98,22 @@ namespace QuickMaffs
             return new(real, imag);
         }
 
+        public static Complex RandInt(string[] parameters)
+        {
+            if (rnd == null)
+                rnd = new();
+
+            _ = ParseComplex.TryParse(parameters[0], out Complex a);
+            _ = ParseComplex.TryParse(parameters[1], out Complex b);
+
+            double real = rnd.Next((int)a.Real, (int)b.Real + 1);
+            double imag = rnd.Next((int)b.Imaginary, (int)b.Imaginary + 1);
+
+            rnd = new(rnd.Next());
+
+            return new(real, imag);
+        }
+
         public static Complex Gamma(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex a);
@@ -281,7 +297,7 @@ namespace QuickMaffs
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex n);
             _ = ParseComplex.TryParse(parameters[1], out Complex r);
-            return Factorial(n, 0) / (Factorial(r, 0) * Factorial(n-r, 0));
+            return Factorial(n, 0) / (Factorial(r, 0) * Factorial(n - r, 0));
         }
 
         public static Complex Abs(string[] parameters)
@@ -343,5 +359,44 @@ namespace QuickMaffs
         }
 
         public static Complex TheAnswerToLifeTheUniverseAndEverything() => 42;
+
+        public static Complex Round(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+
+            Complex nearest = 1;
+            if (parameters.Length > 1)
+                nearest = ParseComplex.Parse(parameters[1]);
+
+            Complex newNum = num / nearest;
+            newNum = new Complex(Math.Round(newNum.Real), Math.Round(newNum.Imaginary));
+            return newNum * nearest;
+        }
+
+        public static Complex Floor(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+
+            Complex nearest = 1;
+            if (parameters.Length > 1)
+                nearest = ParseComplex.Parse(parameters[1]);
+
+            Complex newNum = num / nearest;
+            newNum = new Complex(Math.Floor(newNum.Real), Math.Floor(newNum.Imaginary));
+            return newNum * nearest;
+        }
+
+        public static Complex Ceiling(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+
+            Complex nearest = 1;
+            if (parameters.Length > 1)
+                nearest = ParseComplex.Parse(parameters[1]);
+
+            Complex newNum = num / nearest;
+            newNum = new Complex(Math.Ceiling(newNum.Real), Math.Ceiling(newNum.Imaginary));
+            return newNum * nearest;
+        }
     }
 }

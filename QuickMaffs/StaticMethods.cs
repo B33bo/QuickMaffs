@@ -110,5 +110,12 @@ namespace QuickMaffs
 
             return false;
         }
+
+        public static Complex Parse(string s)
+        {
+            if (TryParse(s, out Complex result))
+                return result;
+            throw new FormatException();
+        }
     }
 }

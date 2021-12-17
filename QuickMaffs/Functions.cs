@@ -21,6 +21,7 @@ namespace QuickMaffs
             { "tanh", new Function(HardCodedFunctions.TanH) },
             { "atan", new Function(HardCodedFunctions.Atan) },
             { "rand", new Function(HardCodedFunctions.Rand) },
+            { "randint", new Function(HardCodedFunctions.RandInt) },
             { "log", new Function(HardCodedFunctions.Log) },
             { "ln", new Function(HardCodedFunctions.LN) },
             { "Γ", new Function(HardCodedFunctions.Gamma) },
@@ -44,6 +45,9 @@ namespace QuickMaffs
             { "set", new Function(HardCodedFunctions.Set)},
             { "convert", new Function(HardCodedFunctions.Conversion)},
             { "theanswertolifetheuniverseandeverything", new Function((_) => 42)},
+            { "round", new Function(HardCodedFunctions.Round)},
+            { "floor", new Function(HardCodedFunctions.Floor)},
+            { "ceil", new Function(HardCodedFunctions.Ceiling)},
         };
 
         public Func<string[], Complex> operation;

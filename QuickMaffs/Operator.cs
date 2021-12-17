@@ -27,6 +27,7 @@ namespace QuickMaffs
             { '>', new Operator(4, HardCodedFunctions.GreaterThan) },
             { '<', new Operator(4, HardCodedFunctions.LessThan) },
             { '±', new Operator(3, (a, b) => a) },
+            { '%', new Operator(3, OperatorDirection.left, (a, b) => a / 100) },
         };
 
         public Func<Complex, Complex, Complex> operation;
@@ -59,7 +60,7 @@ namespace QuickMaffs
             operators.Add(name[0], this);
         }
 
-        public Operator(int bidmasIndex, OperatorDirection direction ,Func<Complex, Complex, Complex> operation)
+        public Operator(int bidmasIndex, OperatorDirection direction, Func<Complex, Complex, Complex> operation)
         {
             this.bidmasIndex = bidmasIndex;
             this.operation = operation;

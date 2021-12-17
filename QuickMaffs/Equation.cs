@@ -295,9 +295,9 @@ namespace QuickMaffs
 
                     Complex a = Complex.NaN, b = Complex.NaN;
                     if (i-1 >= 0)
-                        _ = ParseComplex.TryParse(components[i - 1], out a);
+                        a = ParseComplex.Parse(components[i - 1]);
                     if (components.Count > i + 1)
-                        _ = ParseComplex.TryParse(components[i + 1], out b);
+                        b = ParseComplex.Parse(components[i + 1]);
 
                     components[i] = oper.operation(a, b).ToMathematicalString();
 
@@ -322,7 +322,6 @@ namespace QuickMaffs
                 }
             }
 
-            //return components.Readable();
             return components[0];
         }
 
