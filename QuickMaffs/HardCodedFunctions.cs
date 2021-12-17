@@ -421,5 +421,48 @@ namespace QuickMaffs
             }
             return sum;
         }
+
+        public static Complex Prime(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+
+            if (num.Imaginary != 0)
+                return -1;
+
+            if (num.Real % 1 != 0)
+                return -1;
+
+            if (num.Real == 1 || num.Real == 0)
+                return -1;
+
+            int boundary = (int)Math.Floor(Math.Sqrt(num.Real));
+
+            for (int i = 2; i < boundary+1; i++)
+            {
+                if (num.Real % i == 0)
+                    return -1;
+            }
+            return 1;
+        }
+
+        public static Complex Divisors(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+
+            if (num.Real % 1 != 0)
+                return -1;
+
+            if (num.Imaginary != 0)
+                return -1;
+
+            int divisors = 0;
+
+            for (int i = 0; i < num.Real+1; i++)
+            {
+                if (num.Real % i == 0)
+                    divisors++;
+            }
+            return divisors;
+        }
     }
 }

@@ -49,6 +49,8 @@ namespace QuickMaffs
             { "floor", new Function(HardCodedFunctions.Floor)},
             { "ceil", new Function(HardCodedFunctions.Ceiling)},
             { "Σ", new Function(HardCodedFunctions.Sigma)},
+            { "prime", new Function(HardCodedFunctions.Prime)},
+            { "divisors", new Function(HardCodedFunctions.Divisors)},
         };
 
         public Func<string[], Complex> operation;
