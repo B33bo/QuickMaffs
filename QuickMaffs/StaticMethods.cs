@@ -115,6 +115,7 @@ namespace QuickMaffs
         {
             if (TryParse(s, out Complex result))
                 return result;
+
             throw new FormatException();
         }
     }

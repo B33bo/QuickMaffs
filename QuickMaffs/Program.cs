@@ -15,7 +15,13 @@ namespace QuickMaffs
 
             while (true)
             {
-                Equation eq = new(Console.ReadLine());
+                string input = Console.ReadLine();
+                if (input.ToLower() == "test")
+                {
+                    Test.TestMethods();
+                    continue;
+                }
+                Equation eq = new(input);
                 Console.WriteLine(eq.ToString() + "=");
                 Console.WriteLine(eq.Solve());
             }

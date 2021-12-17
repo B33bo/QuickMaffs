@@ -47,10 +47,17 @@ namespace QuickMaffs
         {
             ComponentType type = ComponentType.Number;
             int nestIndex = 0;
+            bool isSpeechMarks = false;
 
             components.Add("");
             for (int i = 0; i < input.Length; i++)
             {
+                if (isSpeechMarks)
+                {
+                    components[^1] += input[i];
+                    continue;
+                }
+
                 if (input[i] == ' ')
                     continue;
 
@@ -84,6 +91,17 @@ namespace QuickMaffs
                     continue;
                 }
 
+                if (input[i] == '"')
+                {
+                    isSpeechMarks = !isSpeechMarks;
+
+                    if (isSpeechMarks)
+                    {
+                        components.Add("\"");
+                        continue;
+                    }
+                }
+
                 //Used for method seperation
                 if (input[i] == ',')
                 {
@@ -110,7 +128,7 @@ namespace QuickMaffs
             components.RemoveAll((a) => a == "");
             //Variables
 
-            bool isSpeechMarks = false;
+            isSpeechMarks = false;
             for (int i = 0; i < components.Count; i++)
             {
                 if (components[i].StartsWith("(") && components[i].EndsWith(")"))
@@ -323,6 +341,11 @@ namespace QuickMaffs
             }
 
             return components[0];
+        }
+
+        public Complex SolveComplex()
+        {
+            return ParseComplex.Parse(Solve());
         }
 
         public override string ToString()

@@ -398,5 +398,28 @@ namespace QuickMaffs
             newNum = new Complex(Math.Ceiling(newNum.Real), Math.Ceiling(newNum.Imaginary));
             return newNum * nearest;
         }
+
+        public static Complex Sigma(string[] parameters)
+        {
+            char Variable = parameters[0][0];
+
+            if (!Variables.variables.ContainsKey(Variable))
+                Variables.variables.Add(Variable, 0);
+            Variables.variables[Variable] = ParseComplex.Parse(parameters[1]);
+
+            int Length = int.Parse(parameters[2]);
+
+            int start = (int)Variables.variables[Variable].Real;
+
+            Complex sum = 0;
+            for (int i = start; i < Length+1; i++)
+            {
+                Variables.variables[Variable] = i;
+
+                Equation sumnationToDo = new(parameters[3]);
+                sum += sumnationToDo.SolveComplex();
+            }
+            return sum;
+        }
     }
 }

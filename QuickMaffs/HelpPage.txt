@@ -61,6 +61,7 @@ Functions::
 	abs(n)								-The absolute value of the number (forced to be positive)
 	set(name,val)						-Assigns a variable to a value
 	convert(type, number, from, to)		-Converts between a given metric
+	Σ(varName, start, length, equation)	-Sigma notation (sumnation). Σ("a", 1, 10, "a") would be 1+2+3+4+5+6+7+8+9+10=55
 
 Conversions::
 	Angle::
