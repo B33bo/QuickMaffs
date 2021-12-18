@@ -9,7 +9,7 @@ namespace QuickMaffs
 {
     public class Equation
     {
-        private const string Digits = "01234567890E.";
+        private const string Digits = "01234567890.";
         private readonly List<string> components = new();
 
         enum ComponentType
@@ -115,7 +115,7 @@ namespace QuickMaffs
                 ComponentType newType = TypeDetector(components[^1], input[i]);
 
                 //if it has changed, add a new component
-                if (type != newType)
+                if (type != newType || type == ComponentType.Operator)
                 {
                     components.Add("");
                     type = newType;
@@ -313,9 +313,9 @@ namespace QuickMaffs
 
                     Complex a = Complex.NaN, b = Complex.NaN;
                     if (i-1 >= 0)
-                        a = ParseComplex.Parse(components[i - 1]);
+                        _ = ParseComplex.TryParse(components[i - 1], out a);
                     if (components.Count > i + 1)
-                        b = ParseComplex.Parse(components[i + 1]);
+                        _ = ParseComplex.TryParse(components[i + 1], out b);
 
                     components[i] = oper.operation(a, b).ToMathematicalString();
 

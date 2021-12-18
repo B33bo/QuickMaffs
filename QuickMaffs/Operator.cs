@@ -28,6 +28,7 @@ namespace QuickMaffs
             { '<', new Operator(4, HardCodedFunctions.LessThan) },
             { '±', new Operator(3, (a, b) => a) },
             { '%', new Operator(3, OperatorDirection.left, (a, b) => a / 100) },
+            { 'E', new Operator(3, (a, b) => a * (Complex.Pow(10, b))) },
         };
 
         public Func<Complex, Complex, Complex> operation;

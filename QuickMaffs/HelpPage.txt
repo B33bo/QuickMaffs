@@ -13,9 +13,10 @@ Operators::
 	≠ - Not Equal To (if a = b: -1, else: 1)
 	> - Greater than (if a > b: 1, else: -1)
 	< - Greater than (if a < b: 1, else: -1)
+	% - Convert to percentage (a/100)
+	E - E-notation (a * 10^E)
 	( - Opening bracket (a*(b+b) -> a*2b)
 	) - Closing bracket (a*(b+b) -> a*2b)
-	E - E-notation (a * 10^E)
 
 Variables::
 	e - Euler's constant (2.71...)
@@ -62,6 +63,7 @@ Functions::
 	set(name,val)						-Assigns a variable to a value
 	convert(type, number, from, to)		-Converts between a given metric
 	Σ(varName, start, length, equation)	-Sigma notation (sumnation). Σ("a", 1, 10, "a") would be 1+2+3+4+5+6+7+8+9+10=55
+	product(varName,start,len,equation)	-Pi (product) notation.		 Π("a", 1, 10, "a") would be 1*2*3*4*5*6*7*8*9*10=3628800
 	prime(number)						-returns -1 if the number isn't a prime, and 1 if it is
 	divisors(number)					-returns the amount of factors of that number
 
