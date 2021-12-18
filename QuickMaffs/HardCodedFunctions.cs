@@ -356,6 +356,7 @@ namespace QuickMaffs
                 "distance" => Convert.Distance.Convert(num, from, to),
                 "energy" => Energy.Convert(num, from, to),
                 "temperature" => Temperature.Convert(num, from, to),
+                "number" => NumberBaseConversions.Convert(parameters[1], from, to),
                 _ => num.ToMathematicalString(),
             };
         }
