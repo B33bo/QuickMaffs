@@ -37,13 +37,13 @@ namespace QuickMaffs.Convert
             { "footpound", 0.0013558232780517241473 },
         };
 
-        public static Complex Convert(Complex from, string fromUnits, string toUnits)
+        public static string Convert(Complex from, string fromUnits, string toUnits)
         {
             //Convert from X to kiloJoule
             Complex kiloJoule = from * ToKiloJoule[fromUnits.ToLower().Replace(" ", "")];
 
             //Convert from kiloJoule to Y
-            return kiloJoule / ToKiloJoule[toUnits.ToLower().Replace(" ", "")];
+            return (kiloJoule / ToKiloJoule[toUnits.ToLower().Replace(" ", "")]).ToMathematicalString();
         }
     }
 }

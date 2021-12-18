@@ -294,7 +294,7 @@ namespace QuickMaffs
                     solvedParams[j] = newStr;
                 }
 
-                components[i] = Function.functions[components[i]].operation(solvedParams).ToMathematicalString();
+                components[i] = Function.functions[components[i]].operation(solvedParams);
                 components.RemoveAt(i + 1);
                 i--;
             }

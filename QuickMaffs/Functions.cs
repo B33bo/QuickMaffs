@@ -44,7 +44,7 @@ namespace QuickMaffs
             { "abs", new Function(HardCodedFunctions.Abs) },
             { "set", new Function(HardCodedFunctions.Set)},
             { "convert", new Function(HardCodedFunctions.Conversion)},
-            { "theanswertolifetheuniverseandeverything", new Function((_) => 42)},
+            { "theanswertolifetheuniverseandeverything", new Function((_) => "42")},
             { "round", new Function(HardCodedFunctions.Round)},
             { "floor", new Function(HardCodedFunctions.Floor)},
             { "ceil", new Function(HardCodedFunctions.Ceiling)},
@@ -55,16 +55,16 @@ namespace QuickMaffs
             { "divisors", new Function(HardCodedFunctions.Divisors)},
         };
 
-        public Func<string[], Complex> operation;
+        public Func<string[], string> operation;
 
-        public Function(string name, Func<string[], Complex> operation)
+        public Function(string name, Func<string[], string> operation)
         {
             this.operation = operation;
 
             functions.Add(name, this);
         }
 
-        public Function(Func<string[], Complex> operation)
+        public Function(Func<string[], string> operation)
         {
             this.operation = operation;
         }
