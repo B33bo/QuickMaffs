@@ -1,9 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Numerics;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuickMaffs
 {
@@ -207,6 +203,8 @@ namespace QuickMaffs
                 }
             }
 
+            isSpeechMarks = false;
+
             static ComponentType TypeDetector(string previous, char newCharacter)
             {
                 if (newCharacter == '-')
@@ -273,16 +271,8 @@ namespace QuickMaffs
 
                 if (!Function.functions.ContainsKey(components[i]))
                     continue;
-
-                string[] functionParamsString;
-
-                if (components[i + 1].StartsWith("(") && components[i + 1].EndsWith(")"))
-                    functionParamsString = components[i + 1][1..^1].Split(',');
-                else
-                    functionParamsString = components[i + 1].Split(',');
-
-                string[] solvedParams = new string[functionParamsString.Length];
-
+                //Used for functions::
+                string[] functionParamsString = GetParamsOf(components[i+1]);
                 for (int j = 0; j < functionParamsString.Length; j++)
                 {
                     //Thanks to the mostly annoying code suggestions bot, I fixed the bug
@@ -291,10 +281,10 @@ namespace QuickMaffs
                     if (newStr.StartsWith("\"") && newStr.EndsWith("\""))
                         newStr = newStr[1..^1];
 
-                    solvedParams[j] = newStr;
+                    functionParamsString[j] = newStr;
                 }
 
-                components[i] = Function.functions[components[i]].operation(solvedParams);
+                components[i] = Function.functions[components[i]].operation(functionParamsString);
                 components.RemoveAt(i + 1);
                 i--;
             }
@@ -312,7 +302,7 @@ namespace QuickMaffs
                         continue;
 
                     Complex a = Complex.NaN, b = Complex.NaN;
-                    if (i-1 >= 0)
+                    if (i - 1 >= 0)
                         _ = ParseComplex.TryParse(components[i - 1], out a);
                     if (components.Count > i + 1)
                         _ = ParseComplex.TryParse(components[i + 1], out b);
@@ -341,6 +331,38 @@ namespace QuickMaffs
             }
 
             return components[0];
+        }
+
+        private static string[] GetParamsOf(string str)
+        {
+            //Example: (5,3) returns 5, 3
+
+            if (!str.StartsWith("("))
+                str = "(" + str;
+            if (!str.EndsWith(")"))
+                str += ")";
+
+            int bracketIndentLevel = 0;
+            List<string> Params = new();
+            Params.Add("");
+
+            for (int i = 1; i < str.Length-1; i++)
+            {
+                if (str[i] == '(')
+                    bracketIndentLevel++;
+                else if (str[i] == ')')
+                    bracketIndentLevel--;
+
+                char currentChar = str[i];
+                if (bracketIndentLevel == 0 && currentChar == ',')
+                {
+                    Params.Add("");
+                    continue;
+                }
+
+                Params[^1] += currentChar;
+            }
+            return Params.ToArray();
         }
 
         public Complex SolveComplex()

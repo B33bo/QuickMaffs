@@ -47,6 +47,8 @@ namespace QuickMaffs
                 Assert(new Equation("total(e, 5)+1").Solve().StartsWith("8.71"), $"{ new Equation("total(e, 5)+1").Solve()} != 8.71", 16);
                 test++;
                 Assert(new Equation("convert(\"angle\", 5, \"degree\", \"radian\")").Solve().StartsWith("0.0872"), $"{ new Equation("convert(\"angle\", 5, \"degree\", \"radian\")").Solve()} !=0.0872", 17);
+                test++;
+                Assert(new Equation("mod(mod(4553,65),mod(2344,454))").Solve(), "3", 18);
             }
             catch (Exception exc)
             {

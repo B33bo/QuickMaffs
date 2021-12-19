@@ -17,6 +17,7 @@ Operators::
 	E - E-notation (a * 10^E)
 	( - Opening bracket (a*(b+b) -> a*2b)
 	) - Closing bracket (a*(b+b) -> a*2b)
+	° - Degrees (converts the input into radians)
 
 Variables::
 	e - Euler's constant (2.71...)
