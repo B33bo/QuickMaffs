@@ -235,7 +235,14 @@ namespace QuickMaffs
                         //E notation
                         return ComponentType.Number;
 
-                    if (Operator.operators.ContainsKey(previous[0]) || Function.functions.ContainsKey(previous))
+                    if (Operator.operators.TryGetValue(previous[0], out Operator oper))
+                    {
+                        if (oper.direction == OperatorDirection.left)
+                            return ComponentType.Operator;
+                        return ComponentType.Number;
+                    }
+
+                    if (Function.functions.ContainsKey(previous))
                         //The thing before it is an operator/function.
                         return ComponentType.Number;
 
