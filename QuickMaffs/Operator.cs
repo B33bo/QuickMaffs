@@ -71,6 +71,7 @@ namespace QuickMaffs
     }
     public enum OperatorDirection
     {
+        none = 0,
         left = 1,
         right = 2,
         both = 3,

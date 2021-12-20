@@ -40,6 +40,16 @@ Functions::
 	tan(n)								-The tangent function
 	tanh(n)								-The hyperbolic tan function
 	atan(n)								-The inverse tan function
+	csc(n)								-The cosecant function (1/sin)
+    csch(n)								-The hyperbolic cosecant function (1/sinh)
+    acsc(n)								-The inverse cosecant function (1/asin)
+    sec(n)								-The secant function (1/cos)
+    sech(n)								-The hyperbolic secant function (1/cosh)
+    asec(n)								-The inverse secant function (1/acos)
+    cot(n)								-The cotangent function (1/tan)
+    coth(n)								-The hyperbolic cotangent function (1/tanh)
+    acot(n)								-The inverse cotangent function (1/atan)
+
 	rand(a,b)							-A random number between A & B
 	log(a,base)							-Logarithm of a number (a^b = c) so (log(c,a) = a)
 	ln(n)								-Natural log (log(a, e)) where e = 2.71...

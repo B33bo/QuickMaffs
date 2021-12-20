@@ -61,7 +61,7 @@ namespace QuickMaffs
             { "abs", new Function(HardCodedFunctions.Abs) },
             { "set", new Function(HardCodedFunctions.Set)},
             { "convert", new Function(HardCodedFunctions.Conversion)},
-            { "theanswertolifetheuniverseandeverything", new Function((_) => "42")},
+            { "theanswertolifetheuniverseandeverything", new Function((_) => "42")}, //https://hitchhikers.fandom.com/wiki/42
             { "round", new Function(HardCodedFunctions.Round)},
             { "floor", new Function(HardCodedFunctions.Floor)},
             { "ceil", new Function(HardCodedFunctions.Ceiling)},
