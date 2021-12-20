@@ -11,15 +11,32 @@ namespace QuickMaffs
     {
         public static Dictionary<string, Function> functions = new()
         {
+            #region trig
             { "sin", new Function(HardCodedFunctions.Sin) },
             { "sinh", new Function(HardCodedFunctions.SinH) },
             { "asin", new Function(HardCodedFunctions.Asin) },
+            { "arcsin", new Function(HardCodedFunctions.Asin) },
             { "cos", new Function(HardCodedFunctions.Cos) },
             { "cosh", new Function(HardCodedFunctions.CosH) },
             { "acos", new Function(HardCodedFunctions.Acos) },
+            { "arccos", new Function(HardCodedFunctions.Acos) },
             { "tan", new Function(HardCodedFunctions.Tan) },
             { "tanh", new Function(HardCodedFunctions.TanH) },
             { "atan", new Function(HardCodedFunctions.Atan) },
+            { "arctan", new Function(HardCodedFunctions.Atan) },
+            { "csc", new Function(HardCodedFunctions.Csc) },
+            { "csch", new Function(HardCodedFunctions.Csch) },
+            { "acsc", new Function(HardCodedFunctions.ACsc) },
+            { "arccsc", new Function(HardCodedFunctions.ACsc) },
+            { "sec", new Function(HardCodedFunctions.Sec) },
+            { "sech", new Function(HardCodedFunctions.Sech) },
+            { "asec", new Function(HardCodedFunctions.ASec) },
+            { "arcsec", new Function(HardCodedFunctions.ASec) },
+            { "cot", new Function(HardCodedFunctions.ACot) },
+            { "coth", new Function(HardCodedFunctions.Coth) },
+            { "acot", new Function(HardCodedFunctions.ACot) },
+            { "arccot", new Function(HardCodedFunctions.ACot) },
+            #endregion
             { "rand", new Function(HardCodedFunctions.Rand) },
             { "randint", new Function(HardCodedFunctions.RandInt) },
             { "log", new Function(HardCodedFunctions.Log) },

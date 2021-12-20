@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,7 @@ namespace QuickMaffs
                 test++;
                 Assert(new Equation("e").Solve().StartsWith("2.71"), $"{new Equation("e").Solve()} != 2.71", 8);
                 test++;
-                Assert(new Equation("5e").ToString().StartsWith("5*2.71"), $"{new Equation("5e")} != 5*2.71", 9);
+                Assert(new Equation("5e").ToString(), "5e", 9);
                 test++;
                 Assert(new Equation("5e").Solve().StartsWith("13.59"), $"{new Equation("5e").Solve()} != 13.59", 10);
                 test++;
@@ -49,6 +50,15 @@ namespace QuickMaffs
                 Assert(new Equation("convert(\"angle\", 5, \"degree\", \"radian\")").Solve().StartsWith("0.0872"), $"{ new Equation("convert(\"angle\", 5, \"degree\", \"radian\")").Solve()} !=0.0872", 17);
                 test++;
                 Assert(new Equation("mod(mod(4553,65),mod(2344,454))").Solve(), "3", 18);
+                test++;
+                Variables.variables.Add('x', 5);
+                Equation eq = new("5x+1");
+                string v1 = eq.Solve();
+                Variables.variables['x'] = 10;
+                string v2 = eq.Solve();
+                Assert((v1 == "26") && (v2 == "51"), $"{v1} != {v2}", 19);
+                test++;
+                Assert(new Equation("sigma(\"x\", 1, 10, \"x+1\")").Solve(), "65", 20);
             }
             catch (Exception exc)
             {

@@ -8,6 +8,22 @@ namespace QuickMaffs
         private const string Digits = "01234567890.";
         private readonly List<string> components = new();
 
+        public bool IsBoolean
+        {
+            get
+            {
+                if (components.Contains("="))
+                    return true;
+                if (components.Contains(">"))
+                    return true;
+                if (components.Contains("<"))
+                    return true;
+                if (components.Contains("≠"))
+                    return true;
+                return false;
+            }
+        }
+
         enum ComponentType
         {
             Number,
@@ -125,6 +141,7 @@ namespace QuickMaffs
             //Variables
 
             isSpeechMarks = false;
+            /**
             for (int i = 0; i < components.Count; i++)
             {
                 if (components[i].StartsWith("(") && components[i].EndsWith(")"))
@@ -202,8 +219,7 @@ namespace QuickMaffs
                     components[i] = $"({newEquationInnerds})";
                 }
             }
-
-            isSpeechMarks = false;
+            **/
 
             static ComponentType TypeDetector(string previous, char newCharacter)
             {
@@ -235,6 +251,98 @@ namespace QuickMaffs
             }
         }
 
+        private List<string> ResolveVariables()
+        {
+            List<string> returnValue = new();
+
+            for (int i = 0; i < components.Count; i++)
+            {
+                //Because List is a class and if I set something to a class, it works like a pointer
+                returnValue.Add(components[i]);
+            }
+
+            bool isSpeechMarks = false;
+            for (int i = 0; i < returnValue.Count; i++)
+            {
+                if (returnValue[i].StartsWith("(") && returnValue[i].EndsWith(")"))
+                    continue;
+
+                if (!returnValue[i].Contains("\""))
+                {
+                    if (returnValue[i].Contains(","))
+                        continue;
+
+                    if (Function.functions.ContainsKey(returnValue[i]))
+                        continue;
+                }
+
+                if (returnValue[i].Length == 1)
+                {
+                    if (returnValue[i][0] == '"')
+                    {
+                        isSpeechMarks = !isSpeechMarks;
+                        continue;
+                    }
+
+                    if (!Variables.variables.ContainsKey(returnValue[i][0]))
+                        continue;
+
+                    returnValue[i] = Variables.variables[returnValue[i][0]].ToMathematicalString();
+
+                    if (i != 0)
+                    {
+                        if (ParseComplex.TryParse(returnValue[i - 1], out _))
+                            returnValue.Insert(i, "*");
+                    }
+                }
+                else
+                {
+                    string newEquationInnerds = "";
+                    for (int j = 0; j < returnValue[i].Length; j++)
+                    {
+                        if (returnValue[i][j] == '"')
+                        {
+                            isSpeechMarks = !isSpeechMarks;
+                            newEquationInnerds += returnValue[i][j];
+                            continue;
+                        }
+
+                        if (isSpeechMarks)
+                        {
+                            newEquationInnerds += returnValue[i][j];
+                            continue;
+                        }
+
+                        if (Variables.variables.ContainsKey(returnValue[i][j]))
+                        {
+                            if (j >= 1)
+                            {
+                                if (!Operator.operators.ContainsKey(newEquationInnerds[j - 1]))
+                                    if (!newEquationInnerds.EndsWith("*"))
+                                        newEquationInnerds += "*";
+                            }
+
+                            newEquationInnerds += Variables.variables[returnValue[i][j]].ToMathematicalString();
+
+                            if (j < returnValue[i].Length - 1)
+                            {
+                                if (!Operator.operators.ContainsKey(returnValue[i][j + 1]))
+                                    newEquationInnerds += "*";
+                            }
+                        }
+                        else
+                            newEquationInnerds += returnValue[i][j];
+                    }
+
+                    if (returnValue[i] == newEquationInnerds)
+                        continue;
+                    returnValue[i] = $"({newEquationInnerds})";
+                }
+            }
+
+            return returnValue;
+        }
+
         public Equation(List<string> components)
         {
             this.components = components;
@@ -242,37 +350,38 @@ namespace QuickMaffs
 
         public string Solve()
         {
-            if (components.Count == 0)
+            List<string> componentsSolvedVars = ResolveVariables();
+            if (componentsSolvedVars.Count == 0)
                 return "0";
 
-            if (components[0] == "-")
-                components.Insert(0, "0");
+            if (componentsSolvedVars[0] == "-")
+                componentsSolvedVars.Insert(0, "0");
             //Solve functions first
 
-            for (int i = 0; i < components.Count; i++)
+            for (int i = 0; i < componentsSolvedVars.Count; i++)
             {
-                if (components[i].StartsWith('(') && components[i].EndsWith(')'))
+                if (componentsSolvedVars[i].StartsWith('(') && componentsSolvedVars[i].EndsWith(')'))
                 {
-                    if (components[i].Contains(","))
+                    if (componentsSolvedVars[i].Contains(","))
                         continue;
                     //Solve nested equations here
-                    string newEq = new Equation(components[i][1..^1]).Solve();
-                    components[i] = newEq;
+                    string newEq = new Equation(componentsSolvedVars[i][1..^1]).Solve();
+                    componentsSolvedVars[i] = newEq;
                 }
             }
 
-            for (int i = 0; i < components.Count; i++)
+            for (int i = 0; i < componentsSolvedVars.Count; i++)
             {
-                if (components[i].StartsWith('('))
+                if (componentsSolvedVars[i].StartsWith('('))
                 {
                     //It's not a method, it's a bit of code inside parenthesis
-                    components[i] = new Equation(components[i]).Solve();
+                    componentsSolvedVars[i] = new Equation(componentsSolvedVars[i]).Solve();
                 }
 
-                if (!Function.functions.ContainsKey(components[i]))
+                if (!Function.functions.ContainsKey(componentsSolvedVars[i]))
                     continue;
                 //Used for functions::
-                string[] functionParamsString = GetParamsOf(components[i+1]);
+                string[] functionParamsString = GetParamsOf(componentsSolvedVars[i+1]);
                 for (int j = 0; j < functionParamsString.Length; j++)
                 {
                     //Thanks to the mostly annoying code suggestions bot, I fixed the bug
@@ -284,44 +393,44 @@ namespace QuickMaffs
                     functionParamsString[j] = newStr;
                 }
 
-                components[i] = Function.functions[components[i]].operation(functionParamsString);
-                components.RemoveAt(i + 1);
+                componentsSolvedVars[i] = Function.functions[componentsSolvedVars[i]].operation(functionParamsString);
+                componentsSolvedVars.RemoveAt(i + 1);
                 i--;
             }
 
             //Solve the operators, in bidmas order
             for (int j = 0; j < Operator.highestBidmas; j++)
             {
-                for (int i = 0; i < components.Count; i++)
+                for (int i = 0; i < componentsSolvedVars.Count; i++)
                 {
-                    if (components[i].Length != 1)
+                    if (componentsSolvedVars[i].Length != 1)
                         continue;
-                    if (!Operator.operators.TryGetValue(components[i][0], out Operator oper))
+                    if (!Operator.operators.TryGetValue(componentsSolvedVars[i][0], out Operator oper))
                         continue;
                     if (oper.bidmasIndex != j)
                         continue;
 
                     Complex a = Complex.NaN, b = Complex.NaN;
                     if (i - 1 >= 0)
-                        _ = ParseComplex.TryParse(components[i - 1], out a);
-                    if (components.Count > i + 1)
-                        _ = ParseComplex.TryParse(components[i + 1], out b);
+                        _ = ParseComplex.TryParse(componentsSolvedVars[i - 1], out a);
+                    if (componentsSolvedVars.Count > i + 1)
+                        _ = ParseComplex.TryParse(componentsSolvedVars[i + 1], out b);
 
-                    components[i] = oper.operation(a, b).ToMathematicalString();
+                    componentsSolvedVars[i] = oper.operation(a, b).ToMathematicalString();
 
                     //Removes the numbers before and after it
                     switch (oper.direction)
                     {
                         case OperatorDirection.left:
-                            components.RemoveAt(i - 1);
+                            componentsSolvedVars.RemoveAt(i - 1);
                             break;
                         case OperatorDirection.right:
-                            components.RemoveAt(i + 1);
+                            componentsSolvedVars.RemoveAt(i + 1);
                             break;
                         case OperatorDirection.both:
                         default:
-                            components.RemoveAt(i - 1);
-                            components.RemoveAt(i);
+                            componentsSolvedVars.RemoveAt(i - 1);
+                            componentsSolvedVars.RemoveAt(i);
                             break;
                     }
 
@@ -330,7 +439,7 @@ namespace QuickMaffs
                 }
             }
 
-            return components[0];
+            return componentsSolvedVars[0];
         }
 
         private static string[] GetParamsOf(string str)

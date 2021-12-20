@@ -16,56 +16,110 @@ namespace QuickMaffs
         #region trig
         public static string Sin(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Sin(newComplex).ToMathematicalString();
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Sin(num).ToMathematicalString();
         }
 
         public static string Cos(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Cos(newComplex).ToMathematicalString();
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Cos(num).ToMathematicalString();
         }
 
         public static string Tan(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Tan(newComplex).ToMathematicalString();
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Tan(num).ToMathematicalString();
         }
 
         public static string SinH(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Sinh(newComplex).ToMathematicalString();
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Sinh(num).ToMathematicalString();
         }
 
         public static string CosH(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Cosh(newComplex).ToMathematicalString();
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Cosh(num).ToMathematicalString();
         }
 
         public static string TanH(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Tanh(newComplex).ToMathematicalString();
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Tanh(num).ToMathematicalString();
         }
 
         public static string Asin(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Asin(newComplex).ToMathematicalString();
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Asin(num).ToMathematicalString();
         }
 
         public static string Acos(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Acos(newComplex).ToMathematicalString();
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Acos(num).ToMathematicalString();
         }
 
         public static string Atan(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Atan(newComplex).ToMathematicalString();
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Atan(num).ToMathematicalString();
+        }
+
+        public static string Csc(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Sin(num)).ToMathematicalString();
+        }
+
+        public static string Sec(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Cos(num)).ToMathematicalString();
+        }
+
+        public static string Cot(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Tan(num)).ToMathematicalString();
+        }
+
+        public static string Csch(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Sinh(num)).ToMathematicalString();
+        }
+
+        public static string Sech(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Cosh(num)).ToMathematicalString();
+        }
+
+        public static string Coth(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Tanh(num)).ToMathematicalString();
+        }
+
+        public static string ACsc(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Asin(num)).ToMathematicalString();
+        }
+
+        public static string ASec(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Cos(num)).ToMathematicalString();
+        }
+
+        public static string ACot(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Tan(num)).ToMathematicalString();
         }
         #endregion
 
@@ -415,11 +469,11 @@ namespace QuickMaffs
             int start = (int)Variables.variables[Variable].Real;
 
             Complex sum = 0;
-            for (int i = start; i < Length+1; i++)
+            Equation sumnationToDo = new(parameters[3]);
+            for (int i = start; i < Length + 1; i++)
             {
                 Variables.variables[Variable] = i;
 
-                Equation sumnationToDo = new(parameters[3]);
                 sum += sumnationToDo.SolveComplex();
             }
             return sum.ToMathematicalString();
@@ -438,11 +492,11 @@ namespace QuickMaffs
             int start = (int)Variables.variables[Variable].Real;
 
             Complex sum = 1;
+            Equation sumnationToDo = new(parameters[3]);
             for (int i = start; i < Length + 1; i++)
             {
                 Variables.variables[Variable] = i;
 
-                Equation sumnationToDo = new(parameters[3]);
                 sum *= sumnationToDo.SolveComplex();
             }
             return sum.ToMathematicalString();
@@ -463,7 +517,7 @@ namespace QuickMaffs
 
             int boundary = (int)Math.Floor(Math.Sqrt(num.Real));
 
-            for (int i = 2; i < boundary+1; i++)
+            for (int i = 2; i < boundary + 1; i++)
             {
                 if (num.Real % i == 0)
                     return "-1";
@@ -483,7 +537,7 @@ namespace QuickMaffs
 
             int divisors = 0;
 
-            for (int i = 0; i < num.Real+1; i++)
+            for (int i = 0; i < num.Real + 1; i++)
             {
                 if (num.Real % i == 0)
                     divisors++;

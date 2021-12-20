@@ -16,6 +16,7 @@ namespace QuickMaffs
             { 'π', Math.PI },
             { 'ε', double.Epsilon },
             { 'Φ', Constants.GoldenRatio},
+            { 'φ', Constants.GoldenRatio},
             { 'i', Complex.ImaginaryOne},
             { '∞', double.PositiveInfinity },
             { '?', double.NaN},
