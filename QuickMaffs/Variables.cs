@@ -15,11 +15,11 @@ namespace QuickMaffs
             { 'e', Math.E },
             { 'π', Math.PI },
             { 'ε', double.Epsilon },
-            { 'Φ', Constants.GoldenRatio},
-            { 'φ', Constants.GoldenRatio},
-            { 'i', Complex.ImaginaryOne},
+            { 'Φ', Constants.GoldenRatio },
+            { 'φ', Constants.GoldenRatio },
+            { 'i', Complex.ImaginaryOne },
             { '∞', double.PositiveInfinity },
-            { '?', double.NaN},
+            { '?', double.NaN },
         };
     }
 }

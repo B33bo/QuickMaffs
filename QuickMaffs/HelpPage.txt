@@ -22,11 +22,12 @@ Operators::
 Variables::
 	e - Euler's constant (2.71...)
 	π - Pi (3.1415926...)
-	ε - Epsilon / smallest possible value (4.94... * 10^-304)
+	ε - Epsilon
 	Φ - Golden Ratio (1.61)
 	i - Imaginary one (i)
 	∞ - Infinity (infinity)
 	? - Invalid number (NaN)
+	δ = smallest possible value (4.94... * 10^-304)
 
 Functions::
 	*"any" means that you can enter an unlimited amount of parameters

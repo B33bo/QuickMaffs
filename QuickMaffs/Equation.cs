@@ -63,8 +63,34 @@ namespace QuickMaffs
             return true;
         }
 
+        private static bool CheckBrackets(string s)
+        {
+            int nestIndex = 0;
+            bool isSpeechmarks = false;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '"')
+                    isSpeechmarks = !isSpeechmarks;
+
+                if (isSpeechmarks)
+                    continue;
+
+                if (s[i] == '(')
+                    nestIndex++;
+                else if (s[i] == ')')
+                    nestIndex--;
+
+                if (nestIndex < 0)
+                    return false;
+            }
+            return nestIndex == 0;
+        }
+
         public Equation(string input)
         {
+            if (!CheckBrackets(input))
+                throw new InvalidEquation("Brackets don't match");
+
             ComponentType type = ComponentType.Number;
             int nestIndex = 0;
             bool isSpeechMarks = false;
@@ -76,6 +102,8 @@ namespace QuickMaffs
             {
                 if (isSpeechMarks)
                 {
+                    if (input[i] == '"')
+                        isSpeechMarks = !isSpeechMarks;
                     //The value is inside of speech marks, so ignore it
                     components[^1] += input[i];
                     continue;
@@ -109,13 +137,6 @@ namespace QuickMaffs
                     continue;
                 }
 
-                //Anything inside a nested equation will be simply appended and nothing else
-                if (nestIndex > 0)
-                {
-                    components[^1] += input[i];
-                    continue;
-                }
-
                 //If it finds a speech mark, treat it as a string and don't do anything funky to it
                 if (input[i] == '"')
                 {
@@ -123,10 +144,21 @@ namespace QuickMaffs
 
                     if (isSpeechMarks)
                     {
-                        components.Add("\"");
+                        if (nestIndex > 0)
+                            components[^1] += input[i];
+                        else
+                            components.Add("\"");
                         continue;
                     }
                 }
+
+                //Anything inside a nested equation will be simply appended and nothing else
+                if (nestIndex > 0)
+                {
+                    components[^1] += input[i];
+                    continue;
+                }
+
 
                 //Used for method seperation
                 if (input[i] == ',')
@@ -162,10 +194,6 @@ namespace QuickMaffs
 
                     if (previous.Length == 0)
                         //There is nothing before it
-                        return ComponentType.Number;
-
-                    if (previous[^1] == 'E')
-                        //E notation
                         return ComponentType.Number;
 
                     if (Operator.operators.TryGetValue(previous[0], out Operator oper))
@@ -376,7 +404,7 @@ namespace QuickMaffs
                 //Done, replace the index with the answer and remove the parameters
                 componentsSolvedVars[i] = Function.functions[componentsSolvedVars[i]].operation(functionParamsString);
                 componentsSolvedVars.RemoveAt(i + 1);
-                i--;
+                //i--;
             }
 
             //Solve the operators, in bidmas order

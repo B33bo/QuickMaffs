@@ -11,21 +11,25 @@ namespace QuickMaffs
     {
         public static string ToMathematicalString(this Complex complex)
         {
-            if (complex.Imaginary == 0)
-                return complex.Real.ToString();
+            double real = complex.Real;
+            double imaginary = complex.Imaginary;
 
-            if (complex.Imaginary == -1 && complex.Real == 0)
+            if (imaginary == 0)
+                return real.ToString();
+
+            if (imaginary == -1 && real == 0)
                 return "-i";
 
-            if (complex.Real == 0)
-                return complex.Imaginary == 1 ? "i" : $"{complex.Imaginary}i";
+            if (real == 0)
+                return imaginary == 1 ? "i" : $"{imaginary}i";
 
-            if (complex.Imaginary == 1)
-                return $"i + {complex.Real}";
+            if (imaginary == 1)
+                return $"i + {real}";
 
-            if (complex.Imaginary == -1)
-                return $"-i + {complex.Real}";
-            return $"{complex.Imaginary}i + {complex.Real}";
+            if (imaginary == -1)
+                return $"-i + {real}";
+
+            return $"{imaginary}i + {real}";
         }
 
         public static string Readable(this string[] array, char seperator)

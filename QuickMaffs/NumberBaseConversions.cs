@@ -21,6 +21,10 @@ namespace QuickMaffs
             int to = int.Parse(to_str);
 
             long base10 = ToBase10(number, from);
+
+            if (to <= 1)
+                return FromBase10(base10, 10);
+
             return FromBase10(base10, to);
         }
 

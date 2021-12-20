@@ -544,5 +544,10 @@ namespace QuickMaffs
             }
             return divisors.ToString();
         }
+
+        public static string None(string[] parameters)
+        {
+            return parameters[0];
+        }
     }
 }
