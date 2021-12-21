@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuickMaffs
+namespace QuickMaffs.Convert
 {
     public static class NumberBaseConversions
     {

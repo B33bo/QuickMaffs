@@ -60,11 +60,13 @@ namespace QuickMaffs
                 test++;
                 Assert(new Equation("sigma(\"x\", 1, 10, \"x+1\")").Solve(), "65", 20);
                 test++;
-                Assert(new Equation("none(\"(\")").Solve(), "(", 21);
+                Assert(new Equation("value(\"(\")").Solve(), "(", 21);
                 test++;
-                Assert(new Equation("none(\")\")").Solve(), ")", 21);
+                Assert(new Equation("value(\")\")").Solve(), ")", 21);
                 test++;
-                Assert(new Equation("none(\"(\")+1").Solve(), "1", 22);
+                Assert(new Equation("value(\"(\")+1").Solve(), "1", 22);
+                test++;
+                Assert(new Equation("none").Solve(), "0", 23);
             }
             catch (Exception exc)
             {

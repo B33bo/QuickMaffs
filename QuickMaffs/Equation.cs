@@ -389,7 +389,8 @@ namespace QuickMaffs
                     continue;
 
                 //Used for functions::
-                string[] functionParamsString = GetParamsOf(componentsSolvedVars[i + 1]);
+                string[] functionParamsString = System.Array.Empty<string>();
+                functionParamsString = GetParamsOf(componentsSolvedVars[i + 1]);
 
                 //Each param is it's own equation
                 for (int j = 0; j < functionParamsString.Length; j++)
@@ -404,7 +405,6 @@ namespace QuickMaffs
                 //Done, replace the index with the answer and remove the parameters
                 componentsSolvedVars[i] = Function.functions[componentsSolvedVars[i]].operation(functionParamsString);
                 componentsSolvedVars.RemoveAt(i + 1);
-                //i--;
             }
 
             //Solve the operators, in bidmas order

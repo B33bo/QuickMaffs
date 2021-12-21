@@ -71,6 +71,7 @@ namespace QuickMaffs
             { "prime", new Function(HardCodedFunctions.Prime)},
             { "divisors", new Function(HardCodedFunctions.Divisors)},
             { "none", new Function(HardCodedFunctions.None)},
+            { "value", new Function(HardCodedFunctions.Return)},
             { "sqrt", new Function(HardCodedFunctions.Sqrt)},
             { "pow", new Function(HardCodedFunctions.Pow)},
         };

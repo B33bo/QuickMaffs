@@ -411,6 +411,8 @@ namespace QuickMaffs
                 "energy" => Energy.Convert(num, from, to),
                 "temperature" => Temperature.Convert(num, from, to),
                 "number" => NumberBaseConversions.Convert(parameters[1], from, to),
+                "metric" => Metric.Convert(num, from, to),
+                "storage" => Storage.Convert(num, from, to),
                 _ => num.ToMathematicalString(),
             };
         }
@@ -545,10 +547,11 @@ namespace QuickMaffs
             return divisors.ToString();
         }
 
+        public static string Return(string[] parameters)
+            => parameters[0];
+
         public static string None(string[] parameters)
-        {
-            return parameters[0];
-        }
+            => "0";
 
         public static string Sqrt(string[] parameters)
         {
