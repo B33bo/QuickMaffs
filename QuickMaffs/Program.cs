@@ -10,6 +10,13 @@ namespace QuickMaffs
     {
         static void Main(string[] args)
         {
+            if (args.Length >= 1)
+            {
+                Equation eq = new(args[0]);
+                Console.WriteLine(eq.ToString() + "=");
+                Console.WriteLine(eq.Solve());
+                return;
+            }
             //Console.WriteLine(File.ReadAllText(StaticMethods.GetPath("HelpPage.txt")));
             Console.ResetColor();
 

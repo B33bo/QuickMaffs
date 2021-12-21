@@ -549,5 +549,15 @@ namespace QuickMaffs
         {
             return parameters[0];
         }
+
+        public static string Sqrt(string[] parameters)
+        {
+            return Complex.Sqrt(ParseComplex.Parse(parameters[0])).ToMathematicalString();
+        }
+
+        public static string Pow(string[] parameters)
+        {
+            return Complex.Pow(ParseComplex.Parse(parameters[0]), ParseComplex.Parse(parameters[1])).ToMathematicalString();
+        }
     }
 }

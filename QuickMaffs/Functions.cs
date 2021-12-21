@@ -70,7 +70,9 @@ namespace QuickMaffs
             { "product", new Function(HardCodedFunctions.Product)},
             { "prime", new Function(HardCodedFunctions.Prime)},
             { "divisors", new Function(HardCodedFunctions.Divisors)},
-            { "none", new Function(HardCodedFunctions.None)}
+            { "none", new Function(HardCodedFunctions.None)},
+            { "sqrt", new Function(HardCodedFunctions.Sqrt)},
+            { "pow", new Function(HardCodedFunctions.Pow)},
         };
 
         public Func<string[], string> operation;

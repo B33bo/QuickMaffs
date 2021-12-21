@@ -92,6 +92,11 @@ namespace QuickMaffs
 
                 if (splitByi.Length == 1)
                 {
+                    if (splitByi[0] == "-")
+                    {
+                        result = new(0, -1);
+                        return true;
+                    }
                     if (double.TryParse(splitByi[0], out res))
                     {
                         result = new(0, res);
@@ -103,7 +108,12 @@ namespace QuickMaffs
                 if (splitByi.Length == 2)
                 {
                     if (!double.TryParse(splitByi[0], out double imaginary))
-                        return false;
+                    {
+                        if (splitByi[0] == "-")
+                            imaginary = -1;
+                        else
+                            return false;
+                    }
                     if (!double.TryParse(splitByi[1], out double real))
                         return false;
 

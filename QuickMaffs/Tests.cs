@@ -59,6 +59,12 @@ namespace QuickMaffs
                 Assert((v1 == "26") && (v2 == "51"), $"{v1} != {v2}", 19);
                 test++;
                 Assert(new Equation("sigma(\"x\", 1, 10, \"x+1\")").Solve(), "65", 20);
+                test++;
+                Assert(new Equation("none(\"(\")").Solve(), "(", 21);
+                test++;
+                Assert(new Equation("none(\")\")").Solve(), ")", 21);
+                test++;
+                Assert(new Equation("none(\"(\")+1").Solve(), "1", 22);
             }
             catch (Exception exc)
             {
