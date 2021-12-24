@@ -169,7 +169,12 @@ namespace QuickMaffs
                 }
 
                 //Gets the type (number/operator/method)
-                ComponentType newType = TypeDetector(components[^1], input[i]);
+
+                ComponentType newType;
+                if (components[^1] == "" && components.Count > 1)
+                    newType = TypeDetector(components[^2], input[i]);
+                else
+                    newType = TypeDetector(components[^1], input[i]);
 
                 //if it has changed, add a new component
                 if (type != newType || type == ComponentType.Operator)
@@ -196,16 +201,22 @@ namespace QuickMaffs
                         //There is nothing before it
                         return ComponentType.Number;
 
-                    if (Operator.operators.TryGetValue(previous[0], out Operator oper))
+                    if (previous.Length == 1)
                     {
-                        if (oper.direction == OperatorDirection.left)
-                            return ComponentType.Operator;
-                        return ComponentType.Number;
+                        if (Operator.operators.TryGetValue(previous[0], out Operator oper))
+                        {
+                            if (oper.direction == OperatorDirection.left)
+                                return ComponentType.Operator;
+                            return ComponentType.Number;
+                        }
                     }
 
                     if (Function.functions.ContainsKey(previous))
                         //The thing before it is an operator/function.
                         return ComponentType.Number;
+
+                    if (previous.StartsWith("("))
+                        return ComponentType.Operator;
 
                     return ComponentType.Operator;
                 }

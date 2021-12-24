@@ -74,6 +74,9 @@ namespace QuickMaffs
             { "value", new Function(HardCodedFunctions.Return)},
             { "sqrt", new Function(HardCodedFunctions.Sqrt)},
             { "pow", new Function(HardCodedFunctions.Pow)},
+            { "recur", new Function(HardCodedFunctions.Recur)},
+            { "leapyear", new Function(HardCodedFunctions.LeapYear)},
+            { "dayssince", new Function(HardCodedFunctions.DaysSince)},
         };
 
         public Func<string[], string> operation;

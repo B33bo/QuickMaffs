@@ -32,7 +32,7 @@ namespace QuickMaffs
             return $"{imaginary}i + {real}";
         }
 
-        public static string Readable(this string[] array, char seperator)
+        public static string Readable(this string[] array, string seperator)
         {
             string str = "";
 

@@ -413,6 +413,7 @@ namespace QuickMaffs
                 "number" => NumberBaseConversions.Convert(parameters[1], from, to),
                 "metric" => Metric.Convert(num, from, to),
                 "storage" => Storage.Convert(num, from, to),
+                "time" => Time.Convert(num, from, to),
                 _ => num.ToMathematicalString(),
             };
         }
@@ -561,6 +562,59 @@ namespace QuickMaffs
         public static string Pow(string[] parameters)
         {
             return Complex.Pow(ParseComplex.Parse(parameters[0]), ParseComplex.Parse(parameters[1])).ToMathematicalString();
+        }
+
+        public static string Recur(string[] parameters)
+        {
+            string number = parameters[0];
+
+            if (number.Contains("i"))
+            {
+                Complex numberComplex = ParseComplex.Parse(parameters[0]);
+
+                parameters[0] = numberComplex.Real.ToString();
+                string RealRecur = numberComplex.Real == 0 ? "0" : Recur(parameters);
+
+                parameters[0] = numberComplex.Imaginary.ToString();
+                string ImaginaryRecur = numberComplex.Imaginary == 0 ? "0" : Recur(parameters);
+
+                return $"{ImaginaryRecur}i + {RealRecur}";
+            }
+
+            int length = 30;
+            if (parameters.Length > 2)
+                length = int.Parse(parameters[2]);
+
+
+            if (!number.Contains("."))
+                number += ".";
+
+            string recurDecimal = parameters[1];
+
+            length /= recurDecimal.Length;
+            for (int i = number.Split('.')[1].Length; i < length; i++)
+            {
+                number += recurDecimal;
+            }
+
+            return number;
+        }
+
+        public static string LeapYear(string[] parameters)
+        {
+            long year = long.Parse(parameters[0]);
+            if (year % 4 != 0)
+                return "-1";
+            if (year % 100 == 0)
+                return year % 400 == 0 ? "1" : "-1";
+
+            return "1";
+        }
+
+        public static string DaysSince(string[] parameters)
+        {
+            DateTime dt = new(int.Parse(parameters[0]), int.Parse(parameters[1]), int.Parse(parameters[2]));
+            return (DateTime.Now - dt).TotalDays.ToString();
         }
     }
 }
