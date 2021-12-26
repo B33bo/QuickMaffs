@@ -43,6 +43,7 @@ namespace QuickMaffs.Convert
             { "Decade", "decade" },
             { "Century", "century" },
             { "Millennium", "millennium" },
+            { "Planck time", "planck" },
         };
 
         private static Dictionary<string, Complex> ToHours { get; } = new()
@@ -61,6 +62,7 @@ namespace QuickMaffs.Convert
             { "decade", 87600 },
             { "century", 876000 },
             { "millennium", 8760000 },
+            { "planck", 1.497222222e-47 },
         };
 
         public static string Convert(Complex from, string fromUnits, string toUnits)
