@@ -1,66 +1,86 @@
 ﻿Digits::
-0,1,2,3,4,5,6,7,8,9
+	0,1,2,3,4,5,6,7,8,9
 
 Operators::
-+ - Addition (a+b)
-- - Subtraction (a-b)
-*/× - Multiplication (a*b)
-//÷ - Division (a/b)
-^ - Power (aᵇ)
-√ - Root (ath root of b)
-! - Factorial (let a=5. a! = 1*2*3*4*5)
-= - Equals (if a = b: 1, else: -1)
-≠ - Not Equal To (if a = b: -1, else: 1)
-> - Greater than (if a > b: 1, else: -1)
-< - Greater than (if a < b: 1, else: -1)
-( - Opening bracket (a*(b+b) -> a*2b)
-) - Closing bracket (a*(b+b) -> a*2b)
-E - E-notation (a * 10^E)
+	+ - Addition (a+b)
+	- - Subtraction (a-b)
+	*/× - Multiplication (a*b)
+	//÷ - Division (a/b)
+	^ - Power (aᵇ)
+	√ - Root (ath root of b)
+	! - Factorial (let a=5. a! = 1*2*3*4*5)
+	= - Equals (if a = b: 1, else: -1)
+	≠ - Not Equal To (if a = b: -1, else: 1)
+	> - Greater than (if a > b: 1, else: -1)
+	< - Greater than (if a < b: 1, else: -1)
+	% - Convert to percentage (a/100)
+	E - E-notation (a * 10^E)
+	( - Opening bracket (a*(b+b) -> a*2b)
+	) - Closing bracket (a*(b+b) -> a*2b)
+	° - Degrees (converts the input into radians)
 
 Variables::
-e - Euler's constant (2.71...)
-π - Pi (3.1415926...)
-ε - Epsilon / smallest possible value (4.94... * 10^-304)
-Φ - Golden Ratio (1.61)
-i - Imaginary one (i)
-∞ - Infinity (infinity)
-? - Invalid number (NaN)
+	e - Euler's constant (2.71...)
+	π - Pi (3.1415926...)
+	ε - Epsilon
+	Φ - Golden Ratio (1.61)
+	i - Imaginary one (i)
+	∞ - Infinity (infinity)
+	? - Invalid number (NaN)
+	δ = smallest possible value (4.94... * 10^-304)
 
 Functions::
-*"any" means that you can enter an unlimited amount of parameters
+	*"any" means that you can enter an unlimited amount of parameters
 
-sin(n)								-The sine function
-sinh(n)								-The hyperbolic sine function
-asin(n)								-The inverse sine function
-cos(n)								-The cosine function
-cosh(n)								-The hyperbolic cosine function
-acos(n)								-The inverse cosine function
-tan(n)								-The tangent function
-tanh(n)								-The hyperbolic tan function
-atan(n)								-The inverse tan function
-rand(a,b)							-A random number between A & B
-log(a,base)							-Logarithm of a number (a^b = c) so (log(c,a) = a)
-ln(n)								-Natural log (log(a, e)) where e = 2.71...
-Γ(n)								-Gamma function
-total(any)							-The sum of all numbers
-min(any)							-The smallest of all numbers
-max(any)							-The biggest of all numbers
-mean(any)							-The Mean of all numbers (total / length)
-len(any)							-The amount of parameters
-real(n)								-The real part of the input
-imaginary(n)						-The imaginary part of the input
-hcf(any)							-The highest common factor of all elements
-gcd(any)							-The greatest common divisor of all elements (same as hcf)
-lcm(any)							-The lowest common multiple of all elements
-mod(a, b)							-The modulus of a number (remainder of the division)
-sign(n)								-Returns 1 if it's positive, -1 if negative, and 0 if neither (0)
-magnitude(n)						-The length of the complex number from 0
-phase(n)							-The rotation of the complex number from 0
-nPr(n,p)							-(n!) / (n-r)!
-nCr(n,r)							-n! / ((n – r)! r!) n
-abs(n)								-The absolute value of the number (forced to be positive)
-set(name,val)						-Assigns a variable to a value
-convert(type, number, from, to)		-Converts between a given metric
+	sin(n)								-The sine function
+	sinh(n)								-The hyperbolic sine function
+	asin(n)								-The inverse sine function
+	cos(n)								-The cosine function
+	cosh(n)								-The hyperbolic cosine function
+	acos(n)								-The inverse cosine function
+	tan(n)								-The tangent function
+	tanh(n)								-The hyperbolic tan function
+	atan(n)								-The inverse tan function
+	csc(n)								-The cosecant function (1/sin)
+    csch(n)								-The hyperbolic cosecant function (1/sinh)
+    acsc(n)								-The inverse cosecant function (1/asin)
+    sec(n)								-The secant function (1/cos)
+    sech(n)								-The hyperbolic secant function (1/cosh)
+    asec(n)								-The inverse secant function (1/acos)
+    cot(n)								-The cotangent function (1/tan)
+    coth(n)								-The hyperbolic cotangent function (1/tanh)
+    acot(n)								-The inverse cotangent function (1/atan)
+
+	rand(a,b)							-A random number between A & B
+	log(a,base)							-Logarithm of a number (a^b = c) so (log(c,a) = a)
+	ln(n)								-Natural log (log(a, e)) where e = 2.71...
+	Γ(n)								-Gamma function
+	total(any)							-The sum of all numbers
+	min(any)							-The smallest of all numbers
+	max(any)							-The biggest of all numbers
+	mean(any)							-The Mean of all numbers (total / length)
+	len(any)							-The amount of parameters
+	real(n)								-The real part of the input
+	imaginary(n)						-The imaginary part of the input
+	hcf(any)							-The highest common factor of all elements
+	gcd(any)							-The greatest common divisor of all elements (same as hcf)
+	lcm(any)							-The lowest common multiple of all elements
+	mod(a, b)							-The modulus of a number (remainder of the division)
+	sign(n)								-Returns 1 if it's positive, -1 if negative, and 0 if neither (0)
+	magnitude(n)						-The length of the complex number from 0
+	phase(n)							-The rotation of the complex number from 0
+	nPr(n,p)							-(n!) / (n-r)!
+	nCr(n,r)							-n! / ((n – r)! r!) n
+	abs(n)								-The absolute value of the number (forced to be positive)
+	set(name,val)						-Assigns a variable to a value
+	convert(type, number, from, to)		-Converts between a given metric
+	Σ(varName, start, length, equation)	-Sigma notation (sumnation). Σ("a", 1, 10, "a") would be 1+2+3+4+5+6+7+8+9+10=55
+	product(varName,start,len,equation)	-Pi (product) notation.		 Π("a", 1, 10, "a") would be 1*2*3*4*5*6*7*8*9*10=3628800
+	prime(number)						-returns -1 if the number isn't a prime, and 1 if it is
+	divisors(number)					-returns the amount of factors of that number
+	recur(number, digit, ?length)		-Makes the number recurring. recur(5, 2) would be 5.22222222222222222222222
+    leapyear(year)						-Is the year a leap year?
+    dayssince(year, month, day)			-Days since the specified time
 
 Conversions::
 	Angle::
@@ -96,9 +116,59 @@ Conversions::
 		britthermal					-british thermal (btu)
 		usthermal					-united states thermal
 		footpound					-foot-pound
+	Metric::
+		yocto (y)					-10^-24 (0.000000000000000000000001)
+        zepto (z)					-10^-21 (0.000000000000000000001)
+        atto (a)					-10^-18 (0.000000000000000001)
+        femto (f)					-10^-15 (0.000000000000001)
+        pico (p)					-10^-12 (0.000000000001)
+        nano (n)					-10^-9	(0.000000001)
+        micro (µ)					-10^-6	(0.000001)
+        milli (m)					-10^-3	(0.001)
+        centi (c)					-10^-2	(0.01)
+        deci (d)					-10^-1	(0.1)
+         (none)						-10^0	(1)
+        deka (da)					-10^1	(10)
+        hecto (h)					-10^2	(100)
+        kilo (k)					-10^3	(1000)
+        mega (M)					-10^6	(1000000)
+        giga (G)					-10^9	(1000000000)
+        tera (T)					-10^12	(1000000000000)
+        peta (P)					-10^15	(1000000000000000)
+        exa (E)						-10^18	(1000000000000000000)
+        zetta (Z)					-10^21	(1000000000000000000000)
+        yotta (Y)					-10^24	(1000000000000000000000000)
+
+        kibi						-1024^1 (1024)
+        mebi						-1024^2	(1,048,576)
+        gibi						-1024^3	(1,073,741,824)
+        tebi						-1024^4	(1,099,511,627,776)
+        pebi						-1024^5	(1,125,899,906,842,624)
+        exbi						-1024^6	(1,152,921,504,606,847,000)
+        zebi						-1024^7	(1,180,591,620,717,411,300,000)
+        yobi						-1024^8	(1,208,925,819,614,629,200,000,000)
+	Number::
+		[type any number for a base (eg Binary = 2 (2 digits), Normal/Decimal = 10 (10 digits))]
+	Storage::
+		[uses metric]
 	Temperature::
 		celsius						-temperature divided up perfectly where water boils at 100 and freezes at 0
 		centigrade					-same as celsius
 		fahrenheit					-temperature measured in Fahrenheit
 		kelvin						-celsius, but the coldest possible temperature (-273.15 celsius) is at 0
 		rankine						-fahrenheit, but the coldest possible temperature (-459.67 fahrenheit) is at 0
+	Time::
+		ns							-Nanosecond = 10^-9	(0.000000001) seconds
+		μs							-Microsecond = 10^-6	(0.000001) seconds
+		ms							-Millisecond = 10^-3	(0.001) seconds
+		second						-Second
+		minute						-60 seconds
+		hour						-60 minutes
+		day							-24 hours
+		week						-7 days
+		month						-~31 days. Enter "month=?" for a specific month but replace the ? with a month. add a "leapyear" for leapyears
+		year						-30 months
+		decade						-10 years
+		century						-100 years
+		millennium					-1000 years
+		planck						-planck time (time taken for light speed to go planck distance)

@@ -27,7 +27,7 @@ namespace QuickMaffs.Convert
             { "planck length", "planck" },
         };
 
-        private static Dictionary<string, Complex> ToDegrees { get; } = new()
+        private static Dictionary<string, Complex> ToMeters { get; } = new()
         {
             { "nm", 1e-9 },
             { "µm", 1e-6 },
@@ -45,13 +45,13 @@ namespace QuickMaffs.Convert
             { "planck", 1.6e-35 },
         };
 
-        public static Complex Convert(Complex from, string fromUnits, string toUnits)
+        public static string Convert(Complex from, string fromUnits, string toUnits)
         {
             //Convert from X to kiloJoule
-            Complex degrees = from * ToDegrees[fromUnits.ToLower().Replace(" ", "")];
+            Complex degrees = from * ToMeters[fromUnits.ToLower().Replace(" ", "")];
 
             //Convert from kiloJoule to Y
-            return degrees / ToDegrees[toUnits.ToLower().Replace(" ", "")];
+            return (degrees / ToMeters[toUnits.ToLower().Replace(" ", "")]).ToMathematicalString();
         }
     }
 }

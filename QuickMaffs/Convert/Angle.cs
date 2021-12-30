@@ -29,13 +29,13 @@ namespace QuickMaffs.Convert
             { "secondarc", 1d / 3600d},
         };
 
-        public static Complex Convert(Complex from, string fromUnits, string toUnits)
+        public static string Convert(Complex from, string fromUnits, string toUnits)
         {
             //Convert from X to kiloJoule
             Complex degrees = from * ToDegrees[fromUnits.ToLower().Replace(" ", "")];
 
             //Convert from kiloJoule to Y
-            return degrees / ToDegrees[toUnits.ToLower().Replace(" ", "")];
+            return (degrees / ToDegrees[toUnits.ToLower().Replace(" ", "")]).ToMathematicalString();
         }
     }
 }

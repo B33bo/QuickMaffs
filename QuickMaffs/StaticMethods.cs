@@ -11,24 +11,28 @@ namespace QuickMaffs
     {
         public static string ToMathematicalString(this Complex complex)
         {
-            if (complex.Imaginary == 0)
-                return complex.Real.ToString();
+            double real = complex.Real;
+            double imaginary = complex.Imaginary;
 
-            if (complex.Imaginary == -1 && complex.Real == 0)
+            if (imaginary == 0)
+                return real.ToString();
+
+            if (imaginary == -1 && real == 0)
                 return "-i";
 
-            if (complex.Real == 0)
-                return complex.Imaginary == 1 ? "i" : $"{complex.Imaginary}i";
+            if (real == 0)
+                return imaginary == 1 ? "i" : $"{imaginary}i";
 
-            if (complex.Imaginary == 1)
-                return $"i + {complex.Real}";
+            if (imaginary == 1)
+                return $"i + {real}";
 
-            if (complex.Imaginary == -1)
-                return $"-i + {complex.Real}";
-            return $"{complex.Imaginary}i + {complex.Real}";
+            if (imaginary == -1)
+                return $"-i + {real}";
+
+            return $"{imaginary}i + {real}";
         }
 
-        public static string Readable(this string[] array, char seperator)
+        public static string Readable(this string[] array, string seperator)
         {
             string str = "";
 
@@ -76,39 +80,51 @@ namespace QuickMaffs
                 return true;
             }
 
-            if (s.Contains("i"))
+            if (s == "i")
             {
-                string[] splitByi = s.Split('i', StringSplitOptions.RemoveEmptyEntries);
-
-                if (splitByi.Length == 0)
-                {
-                    result = Complex.ImaginaryOne;
-                    return true;
-                }
-
-                if (splitByi.Length == 1)
-                {
-                    if (double.TryParse(splitByi[0], out res))
-                    {
-                        result = new(0, res);
-                        return true;
-                    }
-                    return false;
-                }
-
-                if (splitByi.Length == 2)
-                {
-                    if (!double.TryParse(splitByi[0], out double imaginary))
-                        return false;
-                    if (!double.TryParse(splitByi[1], out double real))
-                        return false;
-
-                    result = new(real, imaginary);
-                    return true;
-                }
+                result = new(0, 1);
+                return true;
             }
 
-            return false;
+            if (s == "-i")
+            {
+                result = new(0, -1);
+                return true;
+            }
+
+            bool isPositive = s.Contains("+");
+            if (!isPositive && !s.Contains("-"))
+            {
+                if (s.EndsWith("i"))
+                {
+                    result = new(0, double.Parse(s[..^1]));
+                    return true;
+                }
+                return false;
+            }
+
+            string[] numbers = s.Contains("+") ? s.Split('+') : s.Split('-');
+
+            if (numbers.Length != 2)
+                return false;
+            if (numbers[0] == "")
+                return false;
+            if (numbers[1] == "")
+                return false;
+
+            if (numbers[0].Contains("i"))
+                result = new(double.Parse(numbers[1]), Parse(numbers[0]).Imaginary);
+            else
+                result = new(double.Parse(numbers[0]), Parse(numbers[1]).Imaginary);
+
+            return true;
+        }
+        public static Complex Parse(string s)
+        {
+            if (TryParse(s, out Complex result))
+                return result;
+
+            throw new FormatException();
         }
     }
 }

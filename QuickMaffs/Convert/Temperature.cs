@@ -42,13 +42,13 @@ namespace QuickMaffs.Convert
             };
         }
 
-        public static Complex Convert(Complex from, string fromUnits, string toUnits)
+        public static string Convert(Complex from, string fromUnits, string toUnits)
         {
             //Convert from X to celsius
             Complex Celsius = ToCelsius(from, fromUnits.ToLower()[0]);
 
             //Convert from celsius to Y
-            return FromCelsius(Celsius, toUnits.ToLower()[0]);
+            return FromCelsius(Celsius, toUnits.ToLower()[0]).ToMathematicalString();
         }
     }
 }

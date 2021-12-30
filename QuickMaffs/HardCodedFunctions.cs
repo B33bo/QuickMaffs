@@ -14,75 +14,129 @@ namespace QuickMaffs
         static Random rnd;
 
         #region trig
-        public static Complex Sin(string[] parameters)
+        public static string Sin(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Sin(newComplex);
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Sin(num).ToMathematicalString();
         }
 
-        public static Complex Cos(string[] parameters)
+        public static string Cos(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Cos(newComplex);
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Cos(num).ToMathematicalString();
         }
 
-        public static Complex Tan(string[] parameters)
+        public static string Tan(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Tan(newComplex);
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Tan(num).ToMathematicalString();
         }
 
-        public static Complex SinH(string[] parameters)
+        public static string SinH(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Sinh(newComplex);
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Sinh(num).ToMathematicalString();
         }
 
-        public static Complex CosH(string[] parameters)
+        public static string CosH(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Cosh(newComplex);
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Cosh(num).ToMathematicalString();
         }
 
-        public static Complex TanH(string[] parameters)
+        public static string TanH(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Tanh(newComplex);
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Tanh(num).ToMathematicalString();
         }
 
-        public static Complex Asin(string[] parameters)
+        public static string Asin(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Asin(newComplex);
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Asin(num).ToMathematicalString();
         }
 
-        public static Complex Acos(string[] parameters)
+        public static string Acos(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Acos(newComplex);
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Acos(num).ToMathematicalString();
         }
 
-        public static Complex Atan(string[] parameters)
+        public static string Atan(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex newComplex);
-            return Complex.Atan(newComplex);
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return Complex.Atan(num).ToMathematicalString();
+        }
+
+        public static string Csc(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Sin(num)).ToMathematicalString();
+        }
+
+        public static string Sec(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Cos(num)).ToMathematicalString();
+        }
+
+        public static string Cot(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Tan(num)).ToMathematicalString();
+        }
+
+        public static string Csch(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Sinh(num)).ToMathematicalString();
+        }
+
+        public static string Sech(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Cosh(num)).ToMathematicalString();
+        }
+
+        public static string Coth(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Tanh(num)).ToMathematicalString();
+        }
+
+        public static string ACsc(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Asin(num)).ToMathematicalString();
+        }
+
+        public static string ASec(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Cos(num)).ToMathematicalString();
+        }
+
+        public static string ACot(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+            return (1 / Complex.Tan(num)).ToMathematicalString();
         }
         #endregion
 
-        public static Complex Log(string[] parameters)
+        public static string Log(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex a);
             _ = ParseComplex.TryParse(parameters[1], out Complex b);
-            return Complex.Log(a, b.Real);
+            return Complex.Log(a, b.Real).ToMathematicalString();
         }
 
-        public static Complex LN(string[] parameters)
+        public static string LN(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex a);
-            return Complex.Log(a);
+            return Complex.Log(a).ToMathematicalString();
         }
 
-        public static Complex Rand(string[] parameters)
+        public static string Rand(string[] parameters)
         {
             if (rnd == null)
                 rnd = new();
@@ -95,14 +149,30 @@ namespace QuickMaffs
 
             rnd = new(rnd.Next());
 
-            return new(real, imag);
+            return new Complex(real, imag).ToMathematicalString();
         }
 
-        public static Complex Gamma(string[] parameters)
+        public static string RandInt(string[] parameters)
+        {
+            if (rnd == null)
+                rnd = new();
+
+            _ = ParseComplex.TryParse(parameters[0], out Complex a);
+            _ = ParseComplex.TryParse(parameters[1], out Complex b);
+
+            double real = rnd.Next((int)a.Real, (int)b.Real + 1);
+            double imag = rnd.Next((int)b.Imaginary, (int)b.Imaginary + 1);
+
+            rnd = new(rnd.Next());
+
+            return new Complex(real, imag).ToMathematicalString();
+        }
+
+        public static string Gamma(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex a);
 
-            return SpecialFunctions.Gamma(a.Real);
+            return SpecialFunctions.Gamma(a.Real).ToString();
         }
 
         public static Complex Factorial(Complex a, Complex b)
@@ -110,7 +180,7 @@ namespace QuickMaffs
             return SpecialFunctions.Gamma(a.Real + 1);
         }
 
-        public static Complex Total(string[] parameters)
+        public static string Total(string[] parameters)
         {
             Complex value = 0;
 
@@ -119,10 +189,10 @@ namespace QuickMaffs
                 if (ParseComplex.TryParse(parameters[i], out Complex newComplex))
                     value += newComplex;
             }
-            return value;
+            return value.ToMathematicalString();
         }
 
-        public static Complex Min(string[] parameters)
+        public static string Min(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex min);
 
@@ -136,10 +206,10 @@ namespace QuickMaffs
                         min = new(min.Real, newComplex.Imaginary);
                 }
             }
-            return min;
+            return min.ToMathematicalString();
         }
 
-        public static Complex Max(string[] parameters)
+        public static string Max(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex max);
 
@@ -153,10 +223,10 @@ namespace QuickMaffs
                         max = new(max.Real, newComplex.Imaginary);
                 }
             }
-            return max;
+            return max.ToMathematicalString();
         }
 
-        public static Complex Mean(string[] parameters)
+        public static string Mean(string[] parameters)
         {
             Complex total = 0;
 
@@ -167,29 +237,29 @@ namespace QuickMaffs
                     total += newComplex;
                 }
             }
-            return total / parameters.Length;
+            return (total / parameters.Length).ToMathematicalString();
         }
 
-        public static Complex Len(string[] parameters) => parameters.Length;
+        public static string Len(string[] parameters) => parameters.Length.ToString();
 
-        public static Complex Real(string[] parameters)
+        public static string Real(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex num);
 
-            return num.Real;
+            return num.Real.ToString();
         }
 
-        public static Complex Imaginary(string[] parameters)
+        public static string Imaginary(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex num);
 
-            return num.Imaginary;
+            return num.Imaginary.ToString();
         }
 
-        public static Complex HCF(string[] parameters)
+        public static string HCF(string[] parameters)
         {
             double[] paramsParsed = new double[parameters.Length];
-            double lowest = Min(parameters).Real;
+            double lowest = ParseComplex.Parse(Min(parameters)).Real;
 
             for (int i = 0; i < parameters.Length; i++)
             {
@@ -212,10 +282,10 @@ namespace QuickMaffs
                 }
             }
 
-            return hcf;
+            return hcf.ToString();
         }
 
-        public static Complex LCM(string[] parameters)
+        public static string LCM(string[] parameters)
         {
             double[] paramsParsed = new double[parameters.Length];
 
@@ -234,7 +304,7 @@ namespace QuickMaffs
                 lcm = (lcm * paramsParsed[i]) / gcd;
 
             }
-            return lcm;
+            return lcm.ToString();
 
             static double findGCD(double a, double b)
             {
@@ -244,50 +314,52 @@ namespace QuickMaffs
             }
         }
 
-        public static Complex Mod(string[] parameters)
+        public static string Mod(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex a);
             _ = ParseComplex.TryParse(parameters[1], out Complex b);
 
-            return a.Real % b.Real;
+            return (a.Real % b.Real).ToString();
         }
 
-        public static Complex Sign(string[] parameters)
+        public static string Sign(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex num);
-            return num.Sign();
+            return num.Sign().ToMathematicalString();
         }
 
-        public static Complex Magnitude(string[] parameters)
+        public static string Magnitude(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex num);
-            return num.Magnitude;
+            return num.Magnitude.ToString();
         }
 
-        public static Complex Phase(string[] parameters)
+        public static string Phase(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex num);
-            return num.Phase;
+            return num.Phase.ToString();
         }
 
-        public static Complex NpR(string[] parameters)
+        public static string NpR(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex n);
-            _ = ParseComplex.TryParse(parameters[1], out Complex r);
-            return Factorial(n, 0) / Factorial(n - r, 0);
+            Complex n = ParseComplex.Parse(parameters[0]);
+            Complex r = ParseComplex.Parse(parameters[1]);
+
+            return (Factorial(n, 0) / Factorial(n - r, 0)).ToMathematicalString();
         }
 
-        public static Complex NcR(string[] parameters)
+        public static string NcR(string[] parameters)
         {
-            _ = ParseComplex.TryParse(parameters[0], out Complex n);
-            _ = ParseComplex.TryParse(parameters[1], out Complex r);
-            return Factorial(n, 0) / (Factorial(r, 0) * Factorial(n-r, 0));
+            Complex n = ParseComplex.Parse(parameters[0]);
+            Complex r = ParseComplex.Parse(parameters[1]);
+
+            return (Factorial(n, 0) / (Factorial(r, 0) * Factorial(n - r, 0))).ToMathematicalString();
         }
 
-        public static Complex Abs(string[] parameters)
+        public static string Abs(string[] parameters)
         {
             _ = ParseComplex.TryParse(parameters[0], out Complex num);
-            return Complex.Abs(num);
+            return Complex.Abs(num).ToString();
         }
 
         public static Complex GreaterThan(Complex a, Complex b)
@@ -312,7 +384,7 @@ namespace QuickMaffs
             return new Complex(real, imaginary);
         }
 
-        public static Complex Set(string[] parameters)
+        public static string Set(string[] parameters)
         {
             char varName = parameters[0][0];
             _ = ParseComplex.TryParse(parameters[1], out Complex value);
@@ -322,11 +394,10 @@ namespace QuickMaffs
             else
                 Variables.variables.Add(varName, value);
 
-            Console.WriteLine($"set {varName} to {value}");
-            return value;
+            return value.ToMathematicalString();
         }
 
-        public static Complex Conversion(string[] parameters)
+        public static string Conversion(string[] parameters)
         {
             string conversion = parameters[0];
             _ = ParseComplex.TryParse(parameters[1], out Complex num);
@@ -339,10 +410,211 @@ namespace QuickMaffs
                 "distance" => Convert.Distance.Convert(num, from, to),
                 "energy" => Energy.Convert(num, from, to),
                 "temperature" => Temperature.Convert(num, from, to),
-                _ => num,
+                "number" => NumberBaseConversions.Convert(parameters[1], from, to),
+                "metric" => Metric.Convert(num, from, to),
+                "storage" => Storage.Convert(num, from, to),
+                "time" => Time.Convert(num, from, to),
+                _ => num.ToMathematicalString(),
             };
         }
 
-        public static Complex TheAnswerToLifeTheUniverseAndEverything() => 42;
+        public static string TheAnswerToLifeTheUniverseAndEverything() => "42";
+
+        public static string Round(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+
+            Complex nearest = 1;
+            if (parameters.Length > 1)
+                nearest = ParseComplex.Parse(parameters[1]);
+
+            Complex newNum = num / nearest;
+            newNum = new Complex(Math.Round(newNum.Real), Math.Round(newNum.Imaginary));
+            return (newNum * nearest).ToMathematicalString();
+        }
+
+        public static string Floor(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+
+            Complex nearest = 1;
+            if (parameters.Length > 1)
+                nearest = ParseComplex.Parse(parameters[1]);
+
+            Complex newNum = num / nearest;
+            newNum = new Complex(Math.Floor(newNum.Real), Math.Floor(newNum.Imaginary));
+            return (newNum * nearest).ToMathematicalString();
+        }
+
+        public static string Ceiling(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+
+            Complex nearest = 1;
+            if (parameters.Length > 1)
+                nearest = ParseComplex.Parse(parameters[1]);
+
+            Complex newNum = num / nearest;
+            newNum = new Complex(Math.Ceiling(newNum.Real), Math.Ceiling(newNum.Imaginary));
+            return (newNum * nearest).ToMathematicalString();
+        }
+
+        public static string Sigma(string[] parameters)
+        {
+            char Variable = parameters[0][0];
+
+            if (!Variables.variables.ContainsKey(Variable))
+                Variables.variables.Add(Variable, 0);
+            Variables.variables[Variable] = ParseComplex.Parse(parameters[1]);
+
+            int Length = int.Parse(parameters[2]);
+
+            int start = (int)Variables.variables[Variable].Real;
+
+            Complex sum = 0;
+            Equation sumnationToDo = new(parameters[3]);
+            for (int i = start; i < Length + 1; i++)
+            {
+                Variables.variables[Variable] = i;
+
+                sum += sumnationToDo.SolveComplex();
+            }
+            return sum.ToMathematicalString();
+        }
+
+        public static string Product(string[] parameters)
+        {
+            char Variable = parameters[0][0];
+
+            if (!Variables.variables.ContainsKey(Variable))
+                Variables.variables.Add(Variable, 0);
+            Variables.variables[Variable] = ParseComplex.Parse(parameters[1]);
+
+            int Length = int.Parse(parameters[2]);
+
+            int start = (int)Variables.variables[Variable].Real;
+
+            Complex sum = 1;
+            Equation sumnationToDo = new(parameters[3]);
+            for (int i = start; i < Length + 1; i++)
+            {
+                Variables.variables[Variable] = i;
+
+                sum *= sumnationToDo.SolveComplex();
+            }
+            return sum.ToMathematicalString();
+        }
+
+        public static string Prime(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+
+            if (num.Imaginary != 0)
+                return "-1";
+
+            if (num.Real % 1 != 0)
+                return "-1";
+
+            if (num.Real == 1 || num.Real == 0)
+                return "-1";
+
+            int boundary = (int)Math.Floor(Math.Sqrt(num.Real));
+
+            for (int i = 2; i < boundary + 1; i++)
+            {
+                if (num.Real % i == 0)
+                    return "-1";
+            }
+            return "1";
+        }
+
+        public static string Divisors(string[] parameters)
+        {
+            Complex num = ParseComplex.Parse(parameters[0]);
+
+            if (num.Real % 1 != 0)
+                return "-1";
+
+            if (num.Imaginary != 0)
+                return "-1";
+
+            int divisors = 0;
+
+            for (int i = 0; i < num.Real + 1; i++)
+            {
+                if (num.Real % i == 0)
+                    divisors++;
+            }
+            return divisors.ToString();
+        }
+
+        public static string Return(string[] parameters)
+            => parameters[0];
+
+        public static string None(string[] parameters)
+            => "0";
+
+        public static string Sqrt(string[] parameters)
+        {
+            return Complex.Sqrt(ParseComplex.Parse(parameters[0])).ToMathematicalString();
+        }
+
+        public static string Pow(string[] parameters)
+        {
+            return Complex.Pow(ParseComplex.Parse(parameters[0]), ParseComplex.Parse(parameters[1])).ToMathematicalString();
+        }
+
+        public static string Recur(string[] parameters)
+        {
+            string number = parameters[0];
+
+            if (number.Contains("i"))
+            {
+                Complex numberComplex = ParseComplex.Parse(parameters[0]);
+
+                parameters[0] = numberComplex.Real.ToString();
+                string RealRecur = numberComplex.Real == 0 ? "0" : Recur(parameters);
+
+                parameters[0] = numberComplex.Imaginary.ToString();
+                string ImaginaryRecur = numberComplex.Imaginary == 0 ? "0" : Recur(parameters);
+
+                return $"{ImaginaryRecur}i + {RealRecur}";
+            }
+
+            int length = 30;
+            if (parameters.Length > 2)
+                length = int.Parse(parameters[2]);
+
+
+            if (!number.Contains("."))
+                number += ".";
+
+            string recurDecimal = parameters[1];
+
+            length /= recurDecimal.Length;
+            for (int i = number.Split('.')[1].Length; i < length; i++)
+            {
+                number += recurDecimal;
+            }
+
+            return number;
+        }
+
+        public static string LeapYear(string[] parameters)
+        {
+            long year = long.Parse(parameters[0]);
+            if (year % 4 != 0)
+                return "-1";
+            if (year % 100 == 0)
+                return year % 400 == 0 ? "1" : "-1";
+
+            return "1";
+        }
+
+        public static string DaysSince(string[] parameters)
+        {
+            DateTime dt = new(int.Parse(parameters[0]), int.Parse(parameters[1]), int.Parse(parameters[2]));
+            return (DateTime.Now - dt).TotalDays.ToString();
+        }
     }
 }
