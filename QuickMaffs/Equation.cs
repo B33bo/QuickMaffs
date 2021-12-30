@@ -232,7 +232,7 @@ namespace QuickMaffs
 
         private List<string> ResolveVariables()
         {
-            //This script turns things like "2e" into "2*e" into "2*2.71..."
+            //This method turns things like "2e" into "2*e" into "2*2.71..."
             //We don't want to directly modify components because you might save an equation, change a variable, and resolve it
 
             List<string> newComponents = new();
