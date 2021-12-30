@@ -71,6 +71,8 @@ namespace QuickMaffs
                 Assert(new Equation("value(\"(\")+1").Solve(), "1", ref test);
 
                 Assert(new Equation("(1+1)-2").Solve(), "0", ref test);
+
+                Assert(new Equation("(i+1)(i+1)").Solve(), "2i", ref test);
             }
             catch (Exception exc)
             {
