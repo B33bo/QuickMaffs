@@ -394,7 +394,7 @@ namespace QuickMaffs
             else
                 Variables.variables.Add(varName, value);
 
-            return value.ToMathematicalString();
+            return "0";
         }
 
         public static string Conversion(string[] parameters)
@@ -615,6 +615,14 @@ namespace QuickMaffs
         {
             DateTime dt = new(int.Parse(parameters[0]), int.Parse(parameters[1]), int.Parse(parameters[2]));
             return (DateTime.Now - dt).TotalDays.ToString();
+        }
+
+        public static string Root(string[] parameters)
+        {
+            Complex a = ParseComplex.Parse(parameters[0]);
+            Complex b = ParseComplex.Parse(parameters[1]);
+
+            return Complex.Pow(a, 1 / b).ToMathematicalString();
         }
     }
 }
