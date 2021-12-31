@@ -630,5 +630,25 @@ namespace QuickMaffs
 
             return Complex.Pow(a, 1 / b).ToMathematicalString();
         }
+
+        public static string Simplify(string[] parameters)
+        {
+            double numerator, denominator;
+            if (parameters.Length < 2)
+            {
+                string[] split = parameters[0].Split('/');
+                numerator = double.Parse(split[0]);
+                denominator = double.Parse(split[1]);
+            }
+            else
+            {
+                numerator = double.Parse(parameters[0]);
+                denominator = double.Parse(parameters[1]);
+            }
+
+            double hcf = double.Parse(HCF(new string[] { numerator.ToString(), denominator.ToString() }));
+
+            return $"{numerator / hcf}/{denominator / hcf}";
+        }
     }
 }
