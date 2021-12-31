@@ -11,6 +11,7 @@ namespace QuickMaffs
     {
         public static string ToMathematicalString(this Complex complex)
         {
+            complex = complex.Approximate();
             double real = complex.Real;
             double imaginary = complex.Imaginary;
 
@@ -125,6 +126,21 @@ namespace QuickMaffs
                 return result;
 
             throw new FormatException();
+        }
+
+        public static Complex Approximate(this Complex c)
+        {
+            double epsilon = Variables.Epsilon;
+            int awayFromZero = (int)Math.Ceiling(Math.Log10((1/epsilon) + 1));
+
+            double real = c.Real;
+            double imaginary = c.Imaginary;
+
+                real = Math.Round(real, awayFromZero, MidpointRounding.AwayFromZero);
+
+                imaginary = Math.Round(imaginary, awayFromZero, MidpointRounding.AwayFromZero);
+
+            return new(real, imaginary);
         }
     }
 }
