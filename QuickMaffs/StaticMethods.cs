@@ -142,5 +142,10 @@ namespace QuickMaffs
 
             return new(real, imaginary);
         }
+
+        public static double Approximate(this double d)
+        {
+            return new Complex(d, 0).Approximate().Real;
+        }
     }
 }

@@ -80,6 +80,7 @@ Functions::
 	recur(number, digit, ?length)		-Makes the number recurring. recur(5, 2) would be 5.22222222222222222222222
     leapyear(year)						-Is the year a leap year?
     dayssince(year, month, day)			-Days since the specified time
+	fraction(number)					-Converts a decimal point into a fraction (0.3 => 3/10)
 
 Conversions::
 	Angle::

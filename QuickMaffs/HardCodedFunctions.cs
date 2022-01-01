@@ -314,6 +314,14 @@ namespace QuickMaffs
 
             static double findGCD(double a, double b)
             {
+                a = a.Approximate();
+                b = b.Approximate();
+                if (b > a)
+                {
+                    var temp = b;
+                    b = a;
+                    a = temp;
+                }
                 if (b == 0)
                     return a;
                 return findGCD(b, a % b);
@@ -324,6 +332,12 @@ namespace QuickMaffs
         {
             Complex a = ParseComplex.Parse(parameters[0]);
             Complex b = ParseComplex.Parse(parameters[1]);
+
+            if (a.Imaginary == 0 && b.Imaginary == 0)
+                return (a.Real % b.Real).ToString();
+
+            if (a.Real == 0 && b.Real == 0)
+                return new Complex(0, a.Imaginary % b.Imaginary).ToMathematicalString();
 
             return new Complex(a.Real % b.Real, a.Imaginary % b.Imaginary).ToMathematicalString();
         }
@@ -631,24 +645,21 @@ namespace QuickMaffs
             return Complex.Pow(a, 1 / b).ToMathematicalString();
         }
 
-        public static string Simplify(string[] parameters)
+        public static string Solve(string[] parameters)
         {
-            double numerator, denominator;
-            if (parameters.Length < 2)
-            {
-                string[] split = parameters[0].Split('/');
-                numerator = double.Parse(split[0]);
-                denominator = double.Parse(split[1]);
-            }
-            else
-            {
-                numerator = double.Parse(parameters[0]);
-                denominator = double.Parse(parameters[1]);
-            }
+            return new Equation(parameters[0]).Solve();
+        }
 
-            double hcf = double.Parse(HCF(new string[] { numerator.ToString(), denominator.ToString() }));
+        public static string Fraction(string[] parameters)
+        {
+            if (parameters[0] == "0")
+                return "0/1";
+            //Example: parameters = [0.25]
+            double digit = double.Parse(parameters[0]); //digit = 0.25
 
-            return $"{numerator / hcf}/{denominator / hcf}";
+            double lcm = double.Parse(LCM(new string[] { "1", digit.ToString() })).Approximate();
+
+            return $"{lcm}/{(lcm/digit)}";
         }
     }
 }

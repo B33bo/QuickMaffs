@@ -30,6 +30,7 @@ namespace QuickMaffs
             { '%', new Operator(0, OperatorDirection.left, (a, b) => a / 100) },
             { 'E', new Operator(0, (a, b) => a * (Complex.Pow(10, b))) },
             { '°', new Operator(0, OperatorDirection.left, (a, b) => ParseComplex.Parse(Convert.Angle.Convert(a, "degree", "radian"))) },
+            { '@', new Operator(0, OperatorDirection.none, (a, b) => 0)},
         };
 
         public Func<Complex, Complex, Complex> operation;
