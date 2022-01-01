@@ -17,12 +17,14 @@ namespace QuickMaffs.Convert
 
         public static string Convert(string number, string from_str, string to_str)
         {
-            int from = int.Parse(from_str);
-            int to = int.Parse(to_str);
+            int from, to;
+
+            from = from_str.ToLower() == "roman" ? -1 : int.Parse(from_str);
+            to = to_str.ToLower() == "roman" ? -1 : int.Parse(to_str);
 
             long base10 = ToBase10(number, from);
 
-            if (to <= 1)
+            if (to <= 1 && to_str != "roman")
                 return FromBase10(base10, 10);
 
             return FromBase10(base10, to);
@@ -32,6 +34,8 @@ namespace QuickMaffs.Convert
         {
             if (from == 10)
                 return long.Parse(number);
+            if (from == -1)
+                return Roman.FromRoman(number);
 
             long returnValue = 0;
 
@@ -50,6 +54,8 @@ namespace QuickMaffs.Convert
         {
             if (to == 10)
                 return number.ToString();
+            if (to == -1)
+                return Roman.ToRoman(number);
 
             string returnValue = "";
             long Quotient = number;

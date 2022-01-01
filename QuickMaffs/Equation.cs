@@ -221,6 +221,9 @@ namespace QuickMaffs
                     return ComponentType.Operator;
                 }
 
+                if (newCharacter == '+' && previous == "E")
+                    return ComponentType.Number;
+
                 if (Digits.Contains(newCharacter))
                     //It's a digit
                     return ComponentType.Number;

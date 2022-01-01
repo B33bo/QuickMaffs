@@ -28,7 +28,7 @@ namespace QuickMaffs
                 
                 Assert(new Equation("5+3 * (4 - 6.1) / 4").ToString(), "5+3*(4-6.1)/4", ref test);
                 
-                Assert(new Equation("sin(50)").Solve(), "-0.26237485370392877", ref test);
+                Assert(new Equation("sin(50)").Solve(), "-0.2623748537", ref test);
                 
                 Assert(new Equation("e").Solve().StartsWith("2.71"), $"{new Equation("e").Solve()} != 2.71", ref test);
                 
@@ -71,6 +71,11 @@ namespace QuickMaffs
                 Assert(new Equation("value(\"(\")+1").Solve(), "1", ref test);
 
                 Assert(new Equation("(1+1)-2").Solve(), "0", ref test);
+
+                //25
+                Assert(new Equation("(i+1)(i+1)").Solve(), "2i", ref test);
+
+                Assert(new Equation("i^2").Solve(), "-1", ref test);
             }
             catch (Exception exc)
             {

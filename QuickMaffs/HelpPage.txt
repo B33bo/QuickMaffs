@@ -22,12 +22,11 @@ Operators::
 Variables::
 	e - Euler's constant (2.71...)
 	π - Pi (3.1415926...)
-	ε - Epsilon
+	ε - Epsilon (4.94... * 10^-304)
 	Φ - Golden Ratio (1.61)
 	i - Imaginary one (i)
 	∞ - Infinity (infinity)
 	? - Invalid number (NaN)
-	δ = smallest possible value (4.94... * 10^-304)
 
 Functions::
 	*"any" means that you can enter an unlimited amount of parameters
@@ -149,6 +148,7 @@ Conversions::
         yobi						-1024^8	(1,208,925,819,614,629,200,000,000)
 	Number::
 		[type any number for a base (eg Binary = 2 (2 digits), Normal/Decimal = 10 (10 digits))]
+		roman						-roman numerals (XII = 12)
 	Storage::
 		[uses metric]
 	Temperature::
