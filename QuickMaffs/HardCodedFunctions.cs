@@ -393,6 +393,17 @@ namespace QuickMaffs
             return new Complex(real, imaginary);
         }
 
+        public static Complex GreaterEqual(Complex a, Complex b)
+        {
+            int real = a.Real >= b.Real ? 1 : -1;
+
+            if (a.Imaginary == 0 && b.Imaginary == 0)
+                return real;
+
+            int imaginary = a.Imaginary >= b.Imaginary ? 1 : -1;
+            return new Complex(real, imaginary);
+        }
+
         public static Complex LessThan(Complex a, Complex b)
         {
             int real = a.Real < b.Real ? 1 : -1;
@@ -401,6 +412,17 @@ namespace QuickMaffs
                 return real;
 
             int imaginary = a.Imaginary < b.Imaginary ? 1 : -1;
+            return new Complex(real, imaginary);
+        }
+
+        public static Complex LessEqual(Complex a, Complex b)
+        {
+            int real = a.Real <= b.Real ? 1 : -1;
+
+            if (a.Imaginary == 0 && b.Imaginary == 0)
+                return real;
+
+            int imaginary = a.Imaginary <= b.Imaginary ? 1 : -1;
             return new Complex(real, imaginary);
         }
 
