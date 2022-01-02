@@ -9,7 +9,7 @@ using QuickMaffs.Convert;
 
 namespace QuickMaffs
 {
-    class HardCodedFunctions
+    public static class HardCodedFunctions
     {
         static Random rnd;
 
