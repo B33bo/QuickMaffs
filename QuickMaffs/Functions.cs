@@ -42,6 +42,7 @@ namespace QuickMaffs
             { "log", new Function(HardCodedFunctions.Log) },
             { "ln", new Function(HardCodedFunctions.LN) },
             { "Γ", new Function(HardCodedFunctions.Gamma) },
+            { "gamma", new Function(HardCodedFunctions.Gamma) },
             { "total", new Function(HardCodedFunctions.Total) },
             { "min", new Function(HardCodedFunctions.Min) },
             { "max", new Function(HardCodedFunctions.Max) },
@@ -81,6 +82,13 @@ namespace QuickMaffs
             { "simplify", new Function(HardCodedFunctions.Fraction)},
             { "solve", new Function(HardCodedFunctions.Solve)},
             { "fraction", new Function(HardCodedFunctions.Fraction)},
+            { "getNaN", new Function((_) => double.NaN.ToString())},
+            { "inf", new Function((_) => double.PositiveInfinity.ToString()) },
+            { "denorm", new Function((_) => ((float)Math.Pow(2, -149)).ToString()) },
+            { "isNaN", new Function(HardCodedFunctions.IsNan) },
+            { "isInf", new Function(HardCodedFunctions.IsInf) },
+            { "if", new Function(HardCodedFunctions.If) },
+            { "null", new Function((_) => "") },
         };
 
         public Func<string[], string> operation;

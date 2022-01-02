@@ -24,10 +24,23 @@ namespace QuickMaffs.Convert
 
             long base10 = ToBase10(number, from);
 
+            if (to == 1)
+                return ToBase1(base10);
+
             if (to <= 1 && to_str != "roman")
                 return FromBase10(base10, 10);
 
             return FromBase10(base10, to);
+        }
+
+        private static string ToBase1(long n)
+        {
+            string s = "";
+            for (int i = 0; i < n; i++)
+            {
+                s += "#";
+            }
+            return s;
         }
 
         private static long ToBase10(string number, int from)
@@ -36,6 +49,8 @@ namespace QuickMaffs.Convert
                 return long.Parse(number);
             if (from == -1)
                 return Roman.FromRoman(number);
+            if (from == 1)
+                return number.Length;
 
             long returnValue = 0;
 
@@ -58,7 +73,7 @@ namespace QuickMaffs.Convert
                 return Roman.ToRoman(number);
 
             string returnValue = "";
-            long Quotient = number;
+            double Quotient = number;
 
             while (true)
             {

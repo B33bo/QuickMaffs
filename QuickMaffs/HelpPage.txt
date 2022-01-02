@@ -81,6 +81,9 @@ Functions::
     leapyear(year)						-Is the year a leap year?
     dayssince(year, month, day)			-Days since the specified time
 	fraction(number)					-Converts a decimal point into a fraction (0.3 => 3/10)
+	isNaN(number)						-If the number is nan, it's a 1, else it's a -1
+	isInf(number)						-If the number is infinity, it's a 1, else it's a -1
+	if(bool, number1, number2)			-If the bool is above 0, it's number1. else number2. note that both number1 and number2 get solved but only one is returned
 
 Conversions::
 	Angle::
@@ -149,6 +152,7 @@ Conversions::
         yobi						-1024^8	(1,208,925,819,614,629,200,000,000)
 	Number::
 		[type any number for a base (eg Binary = 2 (2 digits), Normal/Decimal = 10 (10 digits))]
+		1							-base 1 (puts a # for each value of the input (5 = #####))
 		roman						-roman numerals (XII = 12)
 	Storage::
 		[uses metric]

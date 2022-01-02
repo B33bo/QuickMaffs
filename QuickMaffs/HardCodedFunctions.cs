@@ -661,5 +661,27 @@ namespace QuickMaffs
 
             return $"{lcm}/{(lcm/digit)}";
         }
+
+        public static string IsNan(string[] parameters)
+        {
+            Complex c = ParseComplex.Parse(parameters[0]);
+            return Complex.IsNaN(c) ? "1" : "-1";
+        }
+
+        public static string IsInf(string[] parameters)
+        {
+            Complex c = ParseComplex.Parse(parameters[0]);
+            return Complex.IsInfinity(c) ? "1" : "-1";
+        }
+
+        public static string If(string[] parameters)
+        {
+            double d = double.Parse(parameters[0]);
+            if (d > 0)
+                return parameters[1];
+            if (d == 0 && parameters.Length == 4)
+                return parameters[3];
+            return parameters[2];
+        }
     }
 }
