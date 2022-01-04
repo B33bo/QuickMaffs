@@ -18,7 +18,7 @@ namespace QuickMaffs
             { '*', new Operator(2, (a, b) => a * b) },
             { '×', new Operator(2, (a, b) => a * b) },
             { '/', new Operator(2, (a, b) => a / b) },
-            { '÷', new Operator(2, (a, b) => a * b) },
+            { '÷', new Operator(2, (a, b) => a / b) },
             { '^', new Operator(1, Complex.Pow) },
             { '√', new Operator(1, (a, b) => Complex.Pow(b, 1 / a)) },
             { '!', new Operator(1, OperatorDirection.left, HardCodedFunctions.Factorial) },
