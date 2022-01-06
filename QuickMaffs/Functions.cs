@@ -89,6 +89,7 @@ namespace QuickMaffs
             { "isInf", new Function(HardCodedFunctions.IsInf) },
             { "if", new Function(HardCodedFunctions.If) },
             { "null", new Function((_) => "") },
+            { "concat", new Function(HardCodedFunctions.Concat) },
         };
 
         public Func<string[], string> operation;

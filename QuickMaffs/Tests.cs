@@ -54,10 +54,10 @@ namespace QuickMaffs
                 
                 Assert(new Equation("mod(mod(4553,65),mod(2344,454))").Solve(), "3", ref test);
                 
-                Variables.variables.Add('x', 5);
+                Variables.variables.Add('x', "5");
                 Equation eq = new("5x+1");
                 string v1 = eq.Solve();
-                Variables.variables['x'] = 10;
+                Variables.variables['x'] = "10";
                 string v2 = eq.Solve();
                 Assert((v1 == "26") && (v2 == "51"), $"{v1} != {v2}", ref test);
                 

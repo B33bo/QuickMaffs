@@ -10,22 +10,33 @@ namespace QuickMaffs
 {
     public static class Variables
     {
-        public static Dictionary<char, Complex> variables = new()
+        public static Dictionary<char, string> variables = new()
         {
-            { 'e', Math.E },
-            { 'π', Math.PI },
-            { 'ε', 0.000000001 },
-            { 'Φ', Constants.GoldenRatio },
-            { 'φ', Constants.GoldenRatio },
-            { 'i', Complex.ImaginaryOne },
-            { '∞', double.PositiveInfinity },
-            { '?', double.NaN },
+            { 'e', Math.E.ToString() },
+            { 'π', Math.PI.ToString() },
+            { 'ε', "0.000000001"},
+            { 'Φ', Constants.GoldenRatio.ToString() },
+            { 'φ', Constants.GoldenRatio.ToString() },
+            { 'i', "i" },
+            { '∞', double.PositiveInfinity.ToString() },
+            { '?', double.NaN.ToString() },
+            { '\'', "\"" },
         };
+
+        public static Complex Get(char key)
+        {
+            return ParseComplex.Parse(variables[key]);
+        }
+
+        public static double GetDouble(char key)
+        {
+            return double.Parse(variables[key]);
+        }
 
         public static double Epsilon
         {
-            get => variables['ε'].Real;
-            set => variables['ε'] = value;
+            get => double.Parse(variables['ε']);
+            set => variables['ε'] = value.ToString();
         }
     }
 }

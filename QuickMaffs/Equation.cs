@@ -280,7 +280,7 @@ namespace QuickMaffs
                         continue;
 
                     //It is a variable. Aha!
-                    newComponents[i] = Variables.variables[newComponents[i][0]].ToMathematicalString();
+                    newComponents[i] = Variables.variables[newComponents[i][0]];
 
                     //Ensures that it's not OOB
                     if (i != 0)
@@ -331,7 +331,7 @@ namespace QuickMaffs
                             }
 
                             //add the variable. The ordering is required.
-                            newEquationInnerds += Variables.variables[newComponents[i][j]].ToMathematicalString();
+                            newEquationInnerds += Variables.variables[newComponents[i][j]];
 
                             if (j < newComponents[i].Length - 1)
                             {
@@ -410,7 +410,7 @@ namespace QuickMaffs
                 for (int j = 0; j < functionParamsString.Length; j++)
                 {
                     string newStr = new Equation(functionParamsString[j]).Solve();
-                    if (newStr.StartsWith("\"") && newStr.EndsWith("\""))
+                    if (newStr.StartsWith("\"") && newStr.EndsWith("\"") && newStr.Length != 1)
                         newStr = newStr[1..^1];
 
                     functionParamsString[j] = newStr;

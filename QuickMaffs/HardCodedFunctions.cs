@@ -429,12 +429,11 @@ namespace QuickMaffs
         public static string Set(string[] parameters)
         {
             char varName = parameters[0][0];
-            Complex value = ParseComplex.Parse(parameters[1]);
 
             if (Variables.variables.ContainsKey(varName))
-                Variables.variables[varName] = value;
+                Variables.variables[varName] = parameters[1];
             else
-                Variables.variables.Add(varName, value);
+                Variables.variables.Add(varName, parameters[1]);
 
             return "0";
         }
@@ -506,18 +505,18 @@ namespace QuickMaffs
             char Variable = parameters[0][0];
 
             if (!Variables.variables.ContainsKey(Variable))
-                Variables.variables.Add(Variable, 0);
-            Variables.variables[Variable] = ParseComplex.Parse(parameters[1]);
+                Variables.variables.Add(Variable, "0");
+            Variables.variables[Variable] = parameters[1];
 
             int Length = int.Parse(parameters[2]);
 
-            int start = (int)Variables.variables[Variable].Real;
+            int start = (int)Variables.GetDouble(Variable);
 
             Complex sum = 0;
             Equation sumnationToDo = new(parameters[3]);
             for (int i = start; i < Length + 1; i++)
             {
-                Variables.variables[Variable] = i;
+                Variables.variables[Variable] = i.ToString();
 
                 sum += sumnationToDo.SolveComplex();
             }
@@ -529,18 +528,18 @@ namespace QuickMaffs
             char Variable = parameters[0][0];
 
             if (!Variables.variables.ContainsKey(Variable))
-                Variables.variables.Add(Variable, 0);
-            Variables.variables[Variable] = ParseComplex.Parse(parameters[1]);
+                Variables.variables.Add(Variable, "0");
+            Variables.variables[Variable] = parameters[1];
 
             int Length = int.Parse(parameters[2]);
 
-            int start = (int)Variables.variables[Variable].Real;
+            int start = (int)Variables.GetDouble(Variable);
 
             Complex sum = 1;
             Equation sumnationToDo = new(parameters[3]);
             for (int i = start; i < Length + 1; i++)
             {
-                Variables.variables[Variable] = i;
+                Variables.variables[Variable] = i.ToString();
 
                 sum *= sumnationToDo.SolveComplex();
             }
@@ -704,6 +703,16 @@ namespace QuickMaffs
             if (d == 0 && parameters.Length == 4)
                 return parameters[3];
             return parameters[2];
+        }
+
+        public static string Concat(string[] parameters)
+        {
+            string str = "";
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                str += parameters[i];
+            }
+            return str;
         }
     }
 }
