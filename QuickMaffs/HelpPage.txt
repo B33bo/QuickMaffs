@@ -84,6 +84,15 @@ Functions::
 	isNaN(number)						-If the number is nan, it's a 1, else it's a -1
 	isInf(number)						-If the number is infinity, it's a 1, else it's a -1
 	if(bool, number1, number2)			-If the bool is above 0, it's number1. else number2. note that both number1 and number2 get solved but only one is returned
+	concat(a, b)						-Puts the strings together. example: concat(a,b,c) = abc
+	bool(x)								-Turns the "x" variable into a bool. If it's positive then it's 1, else -1
+	not(x)								-Logical-not of X. If it's positive then it's -1, else 1
+	or(a,b)								-if a or b is true, it's a 1. else -1
+	and(a,b)							-if a and b are true, it's a 1. else -1
+	xor(a,b)							-if a or b is true, and they aren't both true, it's a 1. else -1
+	nand(a,b)							-opposite of "and"
+	xnor(a,b)							-opposite of "xor"
+	nor(a,b)							-opposite of "or"
 
 Conversions::
 	Angle::

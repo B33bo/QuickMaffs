@@ -90,6 +90,16 @@ namespace QuickMaffs
             { "if", new Function(HardCodedFunctions.If) },
             { "null", new Function((_) => "") },
             { "concat", new Function(HardCodedFunctions.Concat) },
+            { "bool", new Function(HardCodedFunctions.Bool) },
+            { "not", new Function(HardCodedFunctions.Not) },
+            { "or", new Function(HardCodedFunctions.Or) },
+            { "and", new Function(HardCodedFunctions.And) },
+            { "xor", new Function(HardCodedFunctions.Xor) },
+            { "nand", new Function(HardCodedFunctions.Nand) },
+            { "xnor", new Function(HardCodedFunctions.XNor) },
+            { "nor", new Function(HardCodedFunctions.XNor) },
+            { "xand", new Function(HardCodedFunctions.Xand) },
+            { "xnand", new Function(HardCodedFunctions.XNand) },
         };
 
         public Func<string[], string> operation;

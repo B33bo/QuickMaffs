@@ -426,6 +426,16 @@ namespace QuickMaffs
             return new Complex(real, imaginary);
         }
 
+        public static Complex Approx(Complex a, Complex b)
+        {
+            return a.Approximate() == b.Approximate() ? 1 : -1;
+        }
+        
+        public static Complex NotApprox(Complex a, Complex b)
+        {
+            return a.Approximate() != b.Approximate() ? 1 : -1;
+        }
+
         public static string Set(string[] parameters)
         {
             char varName = parameters[0][0];
@@ -713,6 +723,108 @@ namespace QuickMaffs
                 str += parameters[i];
             }
             return str;
+        }
+
+        public static string Bool(string[] parameters)
+        {
+            Complex c = ParseComplex.Parse(parameters[0]);
+            int real = c.Real > 0 ? 1 : -1;
+            int imag = c.Imaginary > 0 ? 1 : -1;
+
+            if (c.Real == 0)
+                real = 0;
+
+            if (c.Imaginary == 0)
+                imag = 0;
+
+            return new Complex(real, imag).ToMathematicalString();
+        }
+
+        public static string Not(string[] parameters)
+        {
+            Complex c = ParseComplex.Parse(parameters[0]);
+            int real = c.Real > 0 ? -1 : 1;
+            int imag = c.Imaginary > 0 ? -1 : 1;
+
+            if (c.Real == 0)
+                real = 0;
+
+            if (c.Imaginary == 0)
+                imag = 0;
+
+            return new Complex(real, imag).ToMathematicalString();
+        }
+
+        public static string Or(string[] parameters)
+        {
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                Complex c = ParseComplex.Parse(parameters[i]);
+                if (c.Real > 0)
+                    return "1";
+            }
+
+            return "-1";
+        }
+
+        public static string And(string[] parameters)
+        {
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                Complex c = ParseComplex.Parse(parameters[i]);
+                if (c.Real > 0)
+                    continue;
+                return "-1";
+            }
+
+            return "1";
+        }
+
+        public static string Xor(string[] parameters)
+        {
+            bool reachedOr = false;
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                Complex c = ParseComplex.Parse(parameters[i]);
+                if (c.Real > 0)
+                {
+                    if (reachedOr)
+                        return "-1";
+                    reachedOr = true;
+                }
+            }
+
+            return reachedOr ? "1" : "-1";
+        }
+
+        public static string Nand(string[] parameters)
+        {
+            return And(parameters) == "1" ? "-1" : "1";
+        }
+
+        public static string XNor(string[] parameters)
+        {
+            return Xor(parameters) == "1" ? "-1" : "1";
+        }
+
+        public static string Nor(string[] parameters)
+        {
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (ParseComplex.Parse(parameters[i]).Real > 0)
+                    return "-1";
+            }
+            return "1";
+        }
+
+        public static string Xand(string[] parameters)
+        {
+            return "-1";
+        }
+
+        public static string XNand(string[] parameters)
+        {
+            return "1";
         }
     }
 }
