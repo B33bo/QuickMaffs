@@ -32,7 +32,7 @@ namespace QuickMaffs
                 
                 Assert(new Equation("e").Solve().StartsWith("2.71"), $"{new Equation("e").Solve()} != 2.71", ref test);
                 
-                Assert(new Equation("5e").ToString(), "5e", ref test);
+                Assert(new Equation("5e").ToString(), "5*e", ref test);
                 
                 //10
                 Assert(new Equation("5e").Solve().StartsWith("13.59"), $"{new Equation("5e").Solve()} != 13.59", ref test);
@@ -53,8 +53,12 @@ namespace QuickMaffs
                 Assert(new Equation("convert(\"angle\", 5, \"degree\", \"radian\")").Solve().StartsWith("0.0872"), $"{ new Equation("convert(\"angle\", 5, \"degree\", \"radian\")").Solve()} !=0.0872", ref test);
                 
                 Assert(new Equation("mod(mod(4553,65),mod(2344,454))").Solve(), "3", ref test);
-                
-                Variables.variables.Add('x', "5");
+
+                if (Variables.variables.ContainsKey('x'))
+                    Variables.variables['x'] = "5";
+                else
+                    Variables.variables.Add('x', "5");
+
                 Equation eq = new("5x+1");
                 string v1 = eq.Solve();
                 Variables.variables['x'] = "10";

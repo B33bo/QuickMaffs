@@ -13,6 +13,7 @@ Operators::
 	≠ - Not Equal To (if a = b: -1, else: 1)
 	> - Greater than (if a > b: 1, else: -1)
 	< - Greater than (if a < b: 1, else: -1)
+	≈ - Approximatly equal to
 	% - Convert to percentage (a/100)
 	E - E-notation (a * 10^E)
 	( - Opening bracket (a*(b+b) -> a*2b)

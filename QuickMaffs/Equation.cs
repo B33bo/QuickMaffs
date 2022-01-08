@@ -191,6 +191,8 @@ namespace QuickMaffs
 
             isSpeechMarks = false;
 
+            components = ResolveVariables();
+
             static ComponentType TypeDetector(string previous, char newCharacter)
             {
                 if (newCharacter == '-')
@@ -235,8 +237,7 @@ namespace QuickMaffs
 
         private List<string> ResolveVariables()
         {
-            //This method turns things like "2e" into "2*e" into "2*2.71..."
-            //We don't want to directly modify components because you might save an equation, change a variable, and resolve it
+            //This method turns things like "2e" into "2*e"
 
             List<string> newComponents = new();
 
@@ -280,7 +281,6 @@ namespace QuickMaffs
                         continue;
 
                     //It is a variable. Aha!
-                    newComponents[i] = Variables.variables[newComponents[i][0]];
 
                     //Ensures that it's not OOB
                     if (i != 0)
@@ -331,7 +331,7 @@ namespace QuickMaffs
                             }
 
                             //add the variable. The ordering is required.
-                            newEquationInnerds += Variables.variables[newComponents[i][j]];
+                            newEquationInnerds += newComponents[i][j];/**Variables.variables[newComponents[i][j]];**/
 
                             if (j < newComponents[i].Length - 1)
                             {
@@ -367,44 +367,52 @@ namespace QuickMaffs
         public string Solve()
         {
             //Solve variables first
-            List<string> componentsSolvedVars = ResolveVariables();
+            //List<string> componentsSolvedVars = ResolveVariables();
+            List<string> componentSolvedVars = new();
+            for (int i = 0; i < components.Count; i++)
+            {
+                if (components[i].Length == 1 && Variables.variables.ContainsKey(components[i][0]))
+                    componentSolvedVars.Add(Variables.variables[components[i][0]]);
+                else
+                    componentSolvedVars.Add(components[i]);
+            }
 
-            if (componentsSolvedVars.Count == 0)
+            if (componentSolvedVars.Count == 0)
                 //Empty = 0
                 return "0";
 
-            if (componentsSolvedVars[0] == "-")
+            if (componentSolvedVars[0] == "-")
                 //If it starts with a -, add a zero
-                componentsSolvedVars.Insert(0, "0");
+                componentSolvedVars.Insert(0, "0");
 
             //Solve parenthesis first
-            for (int i = 0; i < componentsSolvedVars.Count; i++)
+            for (int i = 0; i < componentSolvedVars.Count; i++)
             {
-                if (componentsSolvedVars[i].StartsWith('(') && componentsSolvedVars[i].EndsWith(')'))
+                if (componentSolvedVars[i].StartsWith('(') && componentSolvedVars[i].EndsWith(')'))
                 {
-                    if (componentsSolvedVars[i].Contains(","))
+                    if (componentSolvedVars[i].Contains(","))
                         continue;
 
                     //Solve nested equations here
-                    string newEq = new Equation(componentsSolvedVars[i][1..^1]).Solve();
-                    componentsSolvedVars[i] = newEq;
+                    string newEq = new Equation(componentSolvedVars[i][1..^1]).Solve();
+                    componentSolvedVars[i] = newEq;
                 }
             }
 
-            for (int i = 0; i < componentsSolvedVars.Count; i++)
+            for (int i = 0; i < componentSolvedVars.Count; i++)
             {
-                if (componentsSolvedVars[i].StartsWith('('))
+                if (componentSolvedVars[i].StartsWith('('))
                 {
                     //It's not a method, it's a bit of code inside parenthesis
-                    componentsSolvedVars[i] = new Equation(componentsSolvedVars[i]).Solve();
+                    componentSolvedVars[i] = new Equation(componentSolvedVars[i]).Solve();
                 }
 
-                if (!Function.functions.ContainsKey(componentsSolvedVars[i]))
+                if (!Function.functions.ContainsKey(componentSolvedVars[i]))
                     continue;
 
                 //Used for functions::
                 string[] functionParamsString = System.Array.Empty<string>();
-                functionParamsString = GetParamsOf(componentsSolvedVars[i + 1]);
+                functionParamsString = GetParamsOf(componentSolvedVars[i + 1]);
 
                 //Each param is it's own equation
                 for (int j = 0; j < functionParamsString.Length; j++)
@@ -417,8 +425,8 @@ namespace QuickMaffs
                 }
 
                 //Done, replace the index with the answer and remove the parameters
-                componentsSolvedVars[i] = Function.functions[componentsSolvedVars[i]].operation(functionParamsString);
-                componentsSolvedVars.RemoveAt(i + 1);
+                componentSolvedVars[i] = Function.functions[componentSolvedVars[i]].operation(functionParamsString);
+                componentSolvedVars.RemoveAt(i + 1);
             }
 
             //Solve the operators, in bidmas order
@@ -427,13 +435,13 @@ namespace QuickMaffs
                 //Start with the lowest bidmas order (because lower the value the higher the order)
                 //^ = 1, * = 2, + = 3, ...
 
-                for (int i = 0; i < componentsSolvedVars.Count; i++)
+                for (int i = 0; i < componentSolvedVars.Count; i++)
                 {
                     //The reason we need this check as well as the one after it, is because -1 technically starts with an operator
-                    if (componentsSolvedVars[i].Length != 1)
+                    if (componentSolvedVars[i].Length != 1)
                         continue;
 
-                    if (!Operator.operators.TryGetValue(componentsSolvedVars[i][0], out Operator oper))
+                    if (!Operator.operators.TryGetValue(componentSolvedVars[i][0], out Operator oper))
                         continue;
 
                     if (oper.bidmasIndex != bidmasIndex)
@@ -444,11 +452,11 @@ namespace QuickMaffs
                     //Starts at NaN, ends with the number (if it exists - factorials only have 1)
 
                     if (i - 1 >= 0)
-                        _ = ParseComplex.TryParse(componentsSolvedVars[i - 1], out a);
-                    if (componentsSolvedVars.Count > i + 1)
-                        _ = ParseComplex.TryParse(componentsSolvedVars[i + 1], out b);
+                        _ = ParseComplex.TryParse(componentSolvedVars[i - 1], out a);
+                    if (componentSolvedVars.Count > i + 1)
+                        _ = ParseComplex.TryParse(componentSolvedVars[i + 1], out b);
 
-                    componentsSolvedVars[i] = oper.operation(a, b).ToMathematicalString();
+                    componentSolvedVars[i] = oper.operation(a, b).ToMathematicalString();
 
                     //Removes the numbers before and after it
                     //If it's a factorial, only remove the one before it
@@ -457,15 +465,15 @@ namespace QuickMaffs
                         case OperatorDirection.none:
                             break;
                         case OperatorDirection.left:
-                            componentsSolvedVars.RemoveAt(i - 1);
+                            componentSolvedVars.RemoveAt(i - 1);
                             break;
                         case OperatorDirection.right:
-                            componentsSolvedVars.RemoveAt(i + 1);
+                            componentSolvedVars.RemoveAt(i + 1);
                             break;
                         case OperatorDirection.both:
                         default:
-                            componentsSolvedVars.RemoveAt(i - 1);
-                            componentsSolvedVars.RemoveAt(i);
+                            componentSolvedVars.RemoveAt(i - 1);
+                            componentSolvedVars.RemoveAt(i);
                             break;
                     }
 
@@ -475,7 +483,7 @@ namespace QuickMaffs
                 }
             }
 
-            return componentsSolvedVars[0];
+            return componentSolvedVars[0];
         }
 
         private static string[] GetParamsOf(string str)
