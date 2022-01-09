@@ -73,7 +73,7 @@ namespace QuickMaffs.Convert
                 return Roman.ToRoman(number);
 
             string returnValue = "";
-            double Quotient = number;
+            long Quotient = number;
 
             while (true)
             {

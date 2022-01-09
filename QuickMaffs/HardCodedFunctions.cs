@@ -246,7 +246,7 @@ namespace QuickMaffs
             return (total / parameters.Length).ToMathematicalString();
         }
 
-        public static string Len(string[] parameters) => parameters.Length.ToString();
+        public static string Len(string[] parameters) => parameters[0].Length.ToString();
 
         public static string Real(string[] parameters)
         {
