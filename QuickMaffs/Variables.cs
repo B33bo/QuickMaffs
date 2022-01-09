@@ -25,7 +25,7 @@ namespace QuickMaffs
 
         public static Complex Get(char key)
         {
-            return ParseComplex.Parse(variables[key]);
+            return ComplexHelper.Parse(variables[key]);
         }
 
         public static double GetDouble(char key)

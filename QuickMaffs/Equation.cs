@@ -63,7 +63,7 @@ namespace QuickMaffs
             return true;
         }
 
-        private static bool CheckBrackets(string s)
+        private static bool CheckBrackets(ref string s)
         {
             int nestIndex = 0;
             bool isSpeechmarks = false;
@@ -83,12 +83,19 @@ namespace QuickMaffs
                 if (nestIndex < 0)
                     return false;
             }
+
+            while (nestIndex > 0)
+            {
+                s += ")";
+                nestIndex--;
+            }
+
             return nestIndex == 0;
         }
 
         public Equation(string input)
         {
-            if (!CheckBrackets(input))
+            if (!CheckBrackets(ref input))
                 throw new InvalidEquation("Brackets don't match");
 
             ComponentType type = ComponentType.Number;
@@ -286,7 +293,7 @@ namespace QuickMaffs
                     if (i != 0)
                     {
                         //If the previous component is a complex number
-                        if (ParseComplex.TryParse(newComponents[i - 1], out _))
+                        if (ComplexHelper.TryParse(newComponents[i - 1], out _))
                             //Put a times symbol before the current index but after the number
                             newComponents.Insert(i, "*");
                     }
@@ -404,7 +411,7 @@ namespace QuickMaffs
                 if (componentSolvedVars[i].StartsWith('('))
                 {
                     //It's not a method, it's a bit of code inside parenthesis
-                    componentSolvedVars[i] = new Equation(componentSolvedVars[i]).Solve();
+                    componentSolvedVars[i] = new Equation(componentSolvedVars[i][1..^1]).Solve();
                 }
 
                 if (!Function.functions.ContainsKey(componentSolvedVars[i]))
@@ -452,9 +459,9 @@ namespace QuickMaffs
                     //Starts at NaN, ends with the number (if it exists - factorials only have 1)
 
                     if (i - 1 >= 0)
-                        _ = ParseComplex.TryParse(componentSolvedVars[i - 1], out a);
+                        _ = ComplexHelper.TryParse(componentSolvedVars[i - 1], out a);
                     if (componentSolvedVars.Count > i + 1)
-                        _ = ParseComplex.TryParse(componentSolvedVars[i + 1], out b);
+                        _ = ComplexHelper.TryParse(componentSolvedVars[i + 1], out b);
 
                     componentSolvedVars[i] = oper.operation(a, b).ToMathematicalString();
 
@@ -483,7 +490,7 @@ namespace QuickMaffs
                 }
             }
 
-            return componentSolvedVars[0];
+            return componentSolvedVars.Readable("");
         }
 
         private static string[] GetParamsOf(string str)
@@ -521,7 +528,7 @@ namespace QuickMaffs
         }
 
         public Complex SolveComplex() =>
-            ParseComplex.Parse(Solve());
+            ComplexHelper.Parse(Solve());
 
         public override string ToString()
         {
