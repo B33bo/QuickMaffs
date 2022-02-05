@@ -56,20 +56,15 @@ namespace QuickMaffs
         //FORMAT: 3i1 = 3i + 1
         public static bool TryParse(string s, out Complex result)
         {
-<<<<<<< Updated upstream
             s = s.Replace("m", "-");
             s = s.Replace(",", "");
 
             result = 0;
-=======
-            result = 0;
+            if (s == null)
+                return false;
 
             s = s.Replace(" ", "");
 
-            if (s == "")
-                return false;
-
->>>>>>> Stashed changes
             if (double.TryParse(s, out double res))
             {
                 result = res;
