@@ -1,16 +1,36 @@
 ﻿using System;
+using System.IO;
 using System.Numerics;
 
+//FIX FACTORIALS
+//1--e is broken
 namespace QuickMaffs
 {
     internal class Program
     {
-        const string equationTest = "5+3 * (4 - 6.1) / 4";
         static void Main(string[] args)
         {
+            if (args.Length >= 1)
+            {
+                Equation eq = new(args[0]);
+                Console.WriteLine(eq.ToString() + "=");
+                Console.WriteLine(eq.Solve());
+                return;
+            }
+            //Console.WriteLine(File.ReadAllText(StaticMethods.GetPath("HelpPage.txt")));
+            Console.ResetColor();
+
             while (true)
             {
-                Console.WriteLine(EquationParser.Solve(Console.ReadLine()).ToReadableMathematicalString());
+                string input = Console.ReadLine();
+                if (input.ToLower() == "test")
+                {
+                    Test.TestMethods();
+                    continue;
+                }
+                Equation eq = new(input);
+                Console.WriteLine(eq.ToString() + "=");
+                Console.WriteLine(eq.Solve());
             }
         }
     }

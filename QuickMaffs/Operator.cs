@@ -11,81 +11,69 @@ namespace QuickMaffs
 {
     public class Operator
     {
-        public const int maxPemdasOrder = 4;
-
-        public static Operator Invalid { get; } = new Operator(0, (a, b) => Complex.NaN, 0, "");
-
-        private readonly static Operator[] operators =
+        public static Dictionary<char, Operator> operators = new()
         {
-            new (2, (a, b) => a + b, 4, "+"),                                 //Plus     (1 + 1 = 2)
-            new (2, (a, b) => a * b, 3, "*", "×"),                            //Times    (2 * 3 = 6)
-            new (2, (a, b) => a - b, 4, "-"),                                 //Subtract (5 - 3 = 2)
-            new (2, (a, b) => a / b, 3, "/", "÷"),                             //Divide   (9 / 3 = 3)
-            new (2, Complex.Pow, 2, "^"),                                     //Power    (4 ^ 2 = 16)
-            new (2, (a, b) => Complex.Pow(b, 1f / a), 2, "√"),                 //Root     (3 √ 64 = 4)
-            new (2, (a, b) => a == b ? 1 : 0, 0, "="),                         //Equals   (1 = 2 = 0)
-            new (2, (a, b) => a.Real > b.Real ? 1 : 0, 0, ">"),                //Greater  (1 < 2 = 1)
-            new (2, (a, b) => a.Real < b.Real ? 1 : 0, 0, "<"),                //Greater  (1 < 2 = 0)
-            new (1, (a, b) => SpecialFunctions.Factorial((int)a.Real), 1, "!"),//Factorial(5! = 120)
-            new (2, (a, b) => RandomNumber(a, b), 1, "?"),
+            { '+', new Operator(3, (a, b) => a + b) },
+            { '-', new Operator(3, (a, b) => a - b) },
+            { '*', new Operator(2, (a, b) => a * b) },
+            { '×', new Operator(2, (a, b) => a * b) },
+            { '/', new Operator(2, (a, b) => a / b) },
+            { '÷', new Operator(2, (a, b) => a * b) },
+            { '^', new Operator(1, Complex.Pow) },
+            { '√', new Operator(1, (a, b) => Complex.Pow(b, 1 / a)) },
+            { '!', new Operator(1, OperatorDirection.left, HardCodedFunctions.Factorial) },
+            { '=', new Operator(4, (a, b) => (a == b) ? 1 : -1) },
+            { '≠', new Operator(4, (a, b) => (a != b) ? 1 : -1) },
+            { '>', new Operator(4, HardCodedFunctions.GreaterThan) },
+            { '<', new Operator(4, HardCodedFunctions.LessThan) },
+            { '±', new Operator(3, (a, b) => a) },
+            { '%', new Operator(0, OperatorDirection.left, (a, b) => a / 100) },
+            { 'E', new Operator(0, (a, b) => a * (Complex.Pow(10, b))) },
+            { '°', new Operator(0, OperatorDirection.left, (a, b) => ParseComplex.Parse(Convert.Angle.Convert(a, "degree", "radian"))) },
         };
 
-        private static Complex RandomNumber(Complex a, Complex b)
-        {
-            return new Complex(NextDouble(a.Real, b.Real), NextDouble(a.Imaginary, b.Imaginary));
+        public Func<Complex, Complex, Complex> operation;
+        public int bidmasIndex;
+        public const int highestBidmas = 5;
+        public OperatorDirection direction = OperatorDirection.both;
 
-            static double NextDouble(double min, double max)
-            {
-                System.Random random = new System.Random();
-                double val = (random.NextDouble() * (max - min) + min);
-                return val;
-            }
+        public Operator(string name, int bidmasIndex, Func<Complex, Complex, Complex> operation)
+        {
+            this.bidmasIndex = bidmasIndex;
+            this.operation = operation;
+            direction = OperatorDirection.both;
+
+            operators.Add(name[0], this);
         }
 
-        public string[] letters;
-        public int arguments;
-        public int pemdasOrder;
-        public Func<Complex, Complex, Complex> onSolve;
-
-        public Operator(int args, Func<Complex, Complex, Complex> solve, int pemdasOrder, string letter)
+        public Operator(int bidmasIndex, Func<Complex, Complex, Complex> operation)
         {
-            arguments = args;
-            letters = new string[] { letter };
-            onSolve = solve;
-            this.pemdasOrder = pemdasOrder;
-        }
-        public Operator(int args, Func<Complex, Complex, Complex> solve, int pemdasOrder, params string[] letters)
-        {
-            arguments = args;
-            this.letters = letters;
-            onSolve = solve;
-            this.pemdasOrder = pemdasOrder;
+            this.bidmasIndex = bidmasIndex;
+            this.operation = operation;
+            direction = OperatorDirection.both;
         }
 
-        public static Operator Parse(string s)
+        public Operator(string name, OperatorDirection direction, int bidmasIndex, Func<Complex, Complex, Complex> operation)
         {
-            for (int i = 0; i < operators.Length; i++)
-            {
-                if (operators[i].letters.Contains(s))
-                    return operators[i];
-            }
+            this.bidmasIndex = bidmasIndex;
+            this.operation = operation;
+            this.direction = direction;
 
-            throw new FormatException();
+            operators.Add(name[0], this);
         }
 
-        public static bool TryParse(string s, out Operator result)
+        public Operator(int bidmasIndex, OperatorDirection direction, Func<Complex, Complex, Complex> operation)
         {
-            for (int i = 0; i < operators.Length; i++)
-            {
-                if (operators[i].letters.Contains(s))
-                {
-                    result = operators[i];
-                    return true;
-                }
-            }
-
-            result = default;
-            return false;
+            this.bidmasIndex = bidmasIndex;
+            this.operation = operation;
+            this.direction = direction;
         }
+    }
+    public enum OperatorDirection
+    {
+        none = 0,
+        left = 1,
+        right = 2,
+        both = 3,
     }
 }
