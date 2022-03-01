@@ -15,7 +15,7 @@ namespace QuickMaffs
                 Console.WriteLine(eq.Solve());
                 return;
             }
-            //Console.WriteLine(File.ReadAllText(StaticMethods.GetPath("HelpPage.txt")));
+            
             Console.ResetColor();
 
             while (true)
