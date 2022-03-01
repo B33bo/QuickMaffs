@@ -2,8 +2,6 @@
 using System.IO;
 using System.Numerics;
 
-//FIX FACTORIALS
-//1--e is broken
 namespace QuickMaffs
 {
     internal class Program
